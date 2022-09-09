@@ -3,7 +3,6 @@ import pytest
 
 from page_objects.to_rent_search_screen import to_rent_search_screen_methods
 from page_objects.zoopla_landing_screen import zoopla_landing_methods
-from utils.common_methods import common_methods
 
 
 class TestZoopla:
