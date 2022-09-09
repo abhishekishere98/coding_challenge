@@ -7,8 +7,6 @@ from utils.common_methods import common_methods
 
 
 class TestZoopla:
-    # def __init__(self, driver):
-    #     super().__init__(driver)
     @allure.title("Search flight test")
     @allure.description("This is test of searching flight")
     @pytest.mark.code_challenge
