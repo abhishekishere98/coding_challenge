@@ -4,8 +4,6 @@ import time
 import allure
 from unittest import TestCase
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 from base.page_initial import PageInit
 
