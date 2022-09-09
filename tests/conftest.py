@@ -6,7 +6,7 @@ from utils.driver_factory import DriverFactory
 @pytest.fixture(autouse=True)
 def setup(request):
     browser_name = request.config.getoption("browser")
-    driver = DriverFactory.get_driver(browser_name)
+    driver = DriverFactory.get_driver(browser_name[0])
 
     yield driver
     driver.close()
