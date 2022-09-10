@@ -33,7 +33,7 @@ class TestZoopla:
         to_rent.enter_search_criteria_hit_search("London", 1, 1000)
         to_rent.validate_to_rent_search_results_screen_elements("London")
         to_rent.enter_min_price_range(800)
-        to_rent.click_on_create_email_alert()
+        to_rent.click_on_create_email_alert("Daily summary emails")
 
 
     def test_change_frequency_save_search(self, setup):
@@ -50,7 +50,14 @@ class TestZoopla:
         login = zoopla_login_methods(driver)
         login.validate_login_page_elements()
         login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
-        landing.click_saved_nav_link()
+        landing.click_to_rent_nav_link()
+        to_rent = to_rent_search_screen_methods(driver)
+        to_rent.validate_to_rent_search_screen_elements()
+        to_rent.enter_search_criteria_hit_search("London", 1, 1000)
+        to_rent.validate_to_rent_search_results_screen_elements("London")
+        to_rent.enter_min_price_range(800)
+        to_rent.click_on_create_email_alert("Daily summary emails")
+
 
 
     @pytest.mark.code_challenge
@@ -97,10 +104,14 @@ class TestZoopla:
         :return:
         """
         landing = zoopla_landing_methods(setup)
+        driver = landing.yield_driver()
         landing.goto_zoopla_home_page("https://zoopla.co.uk")
         landing.validate_landing_screen_elements()
+        landing.click_sign_in_nav_link()
+        login = zoopla_login_methods(driver)
+        login.validate_login_page_elements()
+        login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
         landing.click_for_sale_nav_link()
-        driver = landing.yield_driver()
         for_sale = for_sale_search_screen_methods(driver)
         for_sale.validate_for_sale_search_screen_elements()
         for_sale.enter_search_criteria_hit_search("SE1 2LH")
@@ -109,6 +120,7 @@ class TestZoopla:
         travel_time = travel_time_search(driver)
         travel_time.validate_travel_time_search_page_elements()
         travel_time.enter_search_criteria_hit_search("SE1 2LH", "15 minutes", "Driving")
+        for_sale.click_save_results()
 
 
     def test_retrive_saved_searches(self, setup):

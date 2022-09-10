@@ -116,6 +116,13 @@ class travel_time_search(PageInit, TestCase):
         self.driver.find_element(By.XPATH, time_search_loc.textbox_area).send_keys(postcode+Keys.ENTER)
         time.sleep(5)
 
+    def save_search_results(self):
+        """
+        This method will save the results of a travel time search
+        :return:
+        """
+
+
 
 
 

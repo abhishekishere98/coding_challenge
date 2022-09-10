@@ -3,6 +3,7 @@ from unittest import TestCase
 
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 from base.page_initial import PageInit
 from utils.common_methods import common_methods
@@ -34,6 +35,7 @@ class to_rent_search_screen_locs:
     dropdown_price_range_min = '//select[@data-testid="min_price"]'
     link_travel_time_search = '//aside[@data-testid="search-sidebar"]//a[contains(text(),"Travel time search")]'
     button_save_search = '//button[text()="Save your search and alert"]'
+    dropdown_alert_frequency = '//select[@id="alert_frequency"]'
     msg_success_search_saved = '//h2[contains(text(),"Success! Your search")]'
     link_manage_my_saved_searches = '//a[text()="Manage my saved searches"]//parent::div'
 
@@ -157,13 +159,16 @@ class to_rent_search_screen_methods(PageInit, TestCase):
                                  to_rent_search_screen_locs.button_search_filter).click()
         time.sleep(5)
 
-    def click_on_create_email_alert(self):
+    def click_on_create_email_alert(self, frequency):
         """
         This methos will click on Create email alert button
         :return:None
         """
-        self.driver.find_element(By.XPATH,
-                                 to_rent_search_screen_locs.button_create_email_alert).click()
+        self.driver.find_element(By.XPATH, to_rent_search_screen_locs.button_create_email_alert).click()
+        time.sleep(2)
+        obj = Select(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.dropdown_alert_frequency))
+        obj.select_by_visible_text(frequency)
+        time.sleep(2)
         common_methods.wait_till_element_clickable(self.driver, to_rent_search_screen_locs.button_save_search)
         time.sleep(2)
         self.driver.find_element(By.XPATH,

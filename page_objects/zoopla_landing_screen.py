@@ -18,6 +18,8 @@ class zoopla_landing_locs:
     button_sign_in = '//ul//li//a[text()="Sign in"]'
     button_saved = '//a[normalize-space()="Saved"]'
     button_account = '//a[normalize-space()="Account"]'
+    link_saved_searches = '//a[normalize-space()="Searches and alerts"]'
+
 
 
 class zoopla_landing_methods(PageInit, TestCase):
@@ -116,14 +118,21 @@ class zoopla_landing_methods(PageInit, TestCase):
         self.driver.find_element(By.XPATH, zoopla_landing_locs.button_sign_in).click()
         time.sleep(3)
 
-    def click_saved_nav_link(self):
+    def click_account_nav_link(self):
         """
         This method will click on To rent navigation link
         :return: None
         """
-        common_methods.wait_for_element(self.driver, zoopla_landing_locs.button_saved)
+        common_methods.wait_for_element(self.driver, zoopla_landing_locs.button_account)
         self.driver.find_element(By.XPATH, zoopla_landing_locs.button_account).click()
         time.sleep(3)
+
+    def navigate_to_saved_searches(self):
+        """
+        This method will navigate user from landing page till saved searches page
+        :return: None
+        """
+        common_methods.wait_for_element()
 
     def yield_driver(self):
         """

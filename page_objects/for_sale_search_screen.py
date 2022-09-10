@@ -2,6 +2,7 @@ import time
 from unittest import TestCase
 from random import randint
 
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
@@ -41,6 +42,11 @@ class for_sale_search_screen_locs:
     header_feature_description = '//section[@data-testid]//h2[@id="listing-features-heading"]'
     text_feature_description_garage = '//section[@data-testid="page_features_section"]//*[contains(text(),"garage") or contains(text(),"Garage")]'
     list_search_results = '//a[@data-testid="listing-details-link"]'
+    button_save_search_for_sale_result = '//div[text()="Save this search"]//parent::div//parent::button'
+    button_save_search = '//button[text()="Save your search and alert"]'
+    dropdown_alert_frequency = '//select[@id="alert_frequency"]'
+    msg_success_search_saved = '//h2[contains(text(),"Success! Your search")]'
+    link_manage_my_saved_searches = '//a[text()="Manage my saved searches"]//parent::div'
 
 
 
@@ -174,8 +180,8 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         :return:None
         """
         elements = self.driver.find_elements(By.XPATH, for_sale_search_screen_locs.list_search_results)
-        if elements is not None or elements.__len__()() != 0:
-            random = randint(1, elements.__len__()+1)
+        if elements is not None or elements.__len__() != 0:
+            random = randint(0, elements.__len__())
             elements[random].click()
             common_methods.wait_for_element(self.driver, for_sale_search_screen_locs.header_feature_description)
             time.sleep(3)
@@ -190,4 +196,33 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         time.sleep(2)
         self.driver.find_element(By.XPATH, for_sale_search_screen_locs.link_travel_time_search).click()
         time.sleep(2)
+
+    def click_save_results(self):
+        """
+        This method will save the search results from travel time search
+        :return:
+        """
+        common_methods.wait_till_element_clickable(self.driver, for_sale_search_screen_locs.button_save_search_for_sale_result)
+        self.driver.find_element(By.XPATH,
+                                 for_sale_search_screen_locs.button_save_search_for_sale_result).click()
+        time.sleep(2)
+        common_methods.wait_till_element_clickable(self.driver, for_sale_search_screen_locs.button_save_search)
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,
+                                 for_sale_search_screen_locs.button_save_search).click()
+        time.sleep(2)
+        common_methods.wait_for_element(self.driver, for_sale_search_screen_locs.msg_success_search_saved)
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 for_sale_search_screen_locs.msg_success_search_saved).is_displayed(),
+                        "'Success' message is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 for_sale_search_screen_locs.link_manage_my_saved_searches).is_displayed(),
+                        "'Manage my saved searches' Link is not displayed")
+        time.sleep(2)
+        a = ActionChains(self.driver)
+        a.move_to_element(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.link_manage_my_saved_searches)).perform()
+        time.sleep(2)
+        a.click(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.link_manage_my_saved_searches)).perform()
+        time.sleep(5)
+
 
