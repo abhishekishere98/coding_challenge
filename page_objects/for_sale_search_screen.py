@@ -5,6 +5,7 @@ from random import randint
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
 
 from base.page_initial import PageInit
 from utils.common_methods import common_methods
@@ -27,9 +28,11 @@ class for_sale_search_screen_locs:
     button_search = '//button[@data-testid="search-btn"]'
     # Search result section
     search_result_header = '//div[@data-testid="search-desktop-subheader"]'
+    textbox_search_area = "//input[@id='header-location']"
     dropdown_search_radius_search_filter = '//div[@data-testid="search-desktop-subheader"]//select[@id="desktop_radius-filter"]'
     dropdown_bedrooms_search_filter = '//div[@data-testid="search-desktop-subheader"]//button[@label="Bedrooms"]'
     dropdown_price_range_search_filter = '//div[@data-testid="search-desktop-subheader"]//button[@label="Price range"]'
+    dropdown_price_max = "//select[@id='price_max']"
     dropdown_property_type_search_filter = '//div[@data-testid="search-desktop-subheader"]//button[@label="Property type"]'
     button_search_filter = '//button[@data-testid="search-button"]'
     button_create_email_alert = '//button//div[contains(text(), "Create email alert")]'
@@ -47,6 +50,7 @@ class for_sale_search_screen_locs:
     dropdown_alert_frequency = '//select[@id="alert_frequency"]'
     msg_success_search_saved = '//h2[contains(text(),"Success! Your search")]'
     link_manage_my_saved_searches = '//a[text()="Manage my saved searches"]//parent::div'
+    button_return_to_search_results = '//button[normalize-space()="Return to search results"]'
 
 
 
@@ -115,8 +119,23 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         common_methods.wait_till_element_clickable(self.driver, for_sale_search_screen_locs.combobox_search_area)
         self.driver.find_element(By.XPATH, for_sale_search_screen_locs.combobox_search_area).click()
         self.driver.find_element(By.XPATH, for_sale_search_screen_locs.combobox_search_area).send_keys(area+Keys.ENTER)
-        # time.sleep(2)
-        # self.driver.find_element(for_sale_search_screen_locs.combobox_search_area).send_keys(Keys.ENTER)
+        time.sleep(2)
+
+    def enter_search_criteria_hit_search_criteria(self, area, bedrooms, max_price):
+        common_methods.wait_till_element_clickable(self.driver, for_sale_search_screen_locs.combobox_search_area)
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.dropdown_bedrooms).click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,
+                                 f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{bedrooms}+")]').click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.dropdown_max_price).click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,
+                                 f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{"{:,}".format(max_price)}")]').click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.combobox_search_area).click()
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.combobox_search_area).send_keys(area+Keys.ENTER)
+        common_methods.wait_for_elements(self.driver, for_sale_search_screen_locs.list_search_results)
         time.sleep(2)
 
     def validate_for_sale_search_results_screen_elements(self, search_area):
@@ -220,9 +239,31 @@ class for_sale_search_screen_methods(PageInit, TestCase):
                         "'Manage my saved searches' Link is not displayed")
         time.sleep(2)
         a = ActionChains(self.driver)
-        a.move_to_element(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.link_manage_my_saved_searches)).perform()
+        a.move_to_element(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.button_return_to_search_results)).perform()
         time.sleep(2)
-        a.click(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.link_manage_my_saved_searches)).perform()
+        a.click(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.button_return_to_search_results)).perform()
         time.sleep(5)
+
+    def validate_retrieved_search(self, area, bedrooms, max_price):
+        """
+        This method will validate if retrieved search result is as per saved search
+        :param area: Area for which search was saved
+        :param bedrooms: Bedrooms for which search was saved
+        :param max_price: Maximum price for which search was saved
+        :return: None
+        """
+        common_methods.wait_till_element_clickable(self.driver, for_sale_search_screen_locs.dropdown_price_range_search_filter)
+        self.assertTrue(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.textbox_search_area).get_attribute("value").find(area)+1,
+                        "Incorrect Search area retrieved")
+        self.assertTrue(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.dropdown_bedrooms_search_filter).get_attribute("title").find(str(bedrooms))+1,
+                        "Incorrect Bedrooms retrieved")
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.dropdown_price_range_search_filter).click()
+        time.sleep(2)
+        obj = Select(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.dropdown_price_max))
+        self.assertTrue(obj.first_selected_option.text.find(str("{:,}".format(max_price)))+1,
+                        "Incorrect maximum price retrieved")
+
+
+
 
 

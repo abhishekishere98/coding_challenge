@@ -19,7 +19,7 @@ class common_methods:
         element_found = WebDriverWait(driver, 5000, 500).until(EC.element_to_be_clickable((By.XPATH, element)))
         return element_found
 
-    def wait_for_elements(driver: WebDriverExtended, element: list):
+    def wait_for_elements(driver: WebDriverExtended, element):
         elements_found = WebDriverWait(driver, 5000, 500).until(EC.presence_of_all_elements_located((By.XPATH, element)))
         return elements_found
 
