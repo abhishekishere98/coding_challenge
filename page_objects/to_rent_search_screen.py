@@ -38,6 +38,7 @@ class to_rent_search_screen_locs:
     dropdown_alert_frequency = '//select[@id="alert_frequency"]'
     msg_success_search_saved = '//h2[contains(text(),"Success! Your search")]'
     link_manage_my_saved_searches = '//a[text()="Manage my saved searches"]//parent::div'
+    button_return_to_search_results = '//button[normalize-space()="Return to search results"]'
 
 
 class to_rent_search_screen_methods(PageInit, TestCase):
@@ -183,9 +184,9 @@ class to_rent_search_screen_methods(PageInit, TestCase):
                         "'Manage my saved searches' Link is not displayed")
         time.sleep(2)
         a = ActionChains(self.driver)
-        a.move_to_element(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.link_manage_my_saved_searches)).perform()
+        a.move_to_element(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.button_return_to_search_results)).perform()
         time.sleep(2)
-        a.click(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.link_manage_my_saved_searches)).perform()
+        a.click(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.button_return_to_search_results)).perform()
         time.sleep(5)
 
 
