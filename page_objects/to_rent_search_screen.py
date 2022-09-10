@@ -31,6 +31,7 @@ class to_rent_search_screen_locs:
     button_search_filter = '//button[@data-testid="search-button"]'
     button_create_email_alert = '//button//div[contains(text(), "Create email alert")]'
     dropdown_price_range_min = '//select[@data-testid="min_price"]'
+    link_travel_time_search = '//aside[@data-testid="search-sidebar"]//a[contains(text(),"Travel time search")]'
 
 
 class to_rent_search_screen_methods(PageInit, TestCase):
@@ -40,7 +41,7 @@ class to_rent_search_screen_methods(PageInit, TestCase):
     def validate_to_rent_search_screen_elements(self):
         """
         This method will click on check if current page is search results
-        :return:
+        :return: None
         """
         common_methods.wait_for_element(self.driver, to_rent_search_screen_locs.header_to_rent_page)
         self.assertTrue(
@@ -132,7 +133,7 @@ class to_rent_search_screen_methods(PageInit, TestCase):
     def enter_min_price_range(self, min_price):
         """
         This method will enter minimum price range for rental search
-        :return:
+        :return: None
         """
         self.assertTrue(self.driver.find_element(By.XPATH,
                                                  to_rent_search_screen_locs.dropdown_price_range_search_filter).is_displayed(),
@@ -160,6 +161,14 @@ class to_rent_search_screen_methods(PageInit, TestCase):
         self.driver.find_element(By.XPATH,
                                  to_rent_search_screen_locs.button_create_email_alert).click()
         time.sleep(3)
+
+
+    def yield_driver(self):
+        """
+        This method will return the driver
+        :return: None
+        """
+        return self.driver
 
 
 

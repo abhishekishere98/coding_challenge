@@ -77,20 +77,36 @@ class zoopla_landing_methods(PageInit, TestCase):
         self.driver.find_element(zoopla_landing_locs.zoopla_search_text_box).send_keys(search_string)
         time.sleep(1)
 
-
-
-
-
     def click_to_rent_nav_link(self):
         """
-        This method will click on To rent nav link
+        This method will click on To rent navigation link
         :return: None
         """
-        common_methods.wait_for_elements(self.driver,zoopla_landing_locs.zoopla_naviagtion_links)
+        common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
         self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[1].click()
         time.sleep(3)
+
+    def click_house_prices_nav_link(self):
+        """
+        This method will click on To rent navigation link
+        :return: None
+        """
+        common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
+        self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[2].click()
+        time.sleep(3)
+
+    def click_for_sale_nav_link(self):
+        """
+        This method will click on To rent navigation link
+        :return: None
+        """
+        common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
+        self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[0].click()
+        time.sleep(3)
+
+    def yield_driver(self):
+        """
+        This method will return the driver
+        :return: None
+        """
         return self.driver
-
-
-
-
