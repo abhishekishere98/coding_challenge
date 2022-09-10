@@ -1,6 +1,8 @@
 import time
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.keys import Keys
 
 from base.page_initial import PageInit
 from unittest import TestCase
@@ -56,15 +58,15 @@ class travel_time_search(PageInit, TestCase):
             self.driver.find_element(By.XPATH, time_search_loc.label_radio_to_rent).is_displayed(),
             "Radio 'To rent' label is not displayed")
         self.assertTrue(
-            self.driver.find_element(By.XPATH, time_search_loc.radio_to_rent).is_displayed(),
+            self.driver.find_element(By.XPATH, time_search_loc.radio_to_rent),
             "Radio button 'To rent' is not displayed")
         self.assertTrue(
-            self.driver.find_element(By.XPATH, time_search_loc.radio_for_sale).is_displayed(),
+            self.driver.find_element(By.XPATH, time_search_loc.radio_for_sale),
             "Radio button 'To rent' is not displayed")
         self.assertTrue(
             self.driver.find_element(By.XPATH, time_search_loc.textbox_area).is_displayed(),
             "Textbox 'PostCode,School or Station' label is not displayed")
-        elements = self.driver.find_elements(time_search_loc.labels_search_criteria_for_sale)
+        elements = self.driver.find_elements(By.XPATH,time_search_loc.labels_search_criteria_for_sale)
         labels = []
         for i in elements:
             labels.append(i.text)
@@ -94,6 +96,26 @@ class travel_time_search(PageInit, TestCase):
         self.assertTrue(
             self.driver.find_element(By.XPATH, time_search_loc.link_advanced_search).is_displayed(),
             "Link 'Advanced search options' is not displayed")
+
+    def enter_search_criteria_hit_search(self, postcode, max_travel_time, method_of_transport):
+        """
+        This method will enter all relevant data for Travel Time Search and hit search button
+        :param postcode: Postcode where search needs to be performed
+        :param max_travel_time: Maximum travel time expected
+        :param method_of_transport: Mode of transportation
+        :return: None
+        """
+        obj = Select(self.driver.find_element(By.XPATH, time_search_loc.dropdown_max_travel_time_for_sale))
+        obj.select_by_visible_text(max_travel_time)
+        time.sleep(2)
+        obj = Select(self.driver.find_element(By.XPATH, time_search_loc.dropdown_method_of_transfer_for_sale))
+        obj.select_by_visible_text(method_of_transport)
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, time_search_loc.textbox_area).click()
+        time.sleep(1)
+        self.driver.find_element(By.XPATH, time_search_loc.textbox_area).send_keys(postcode+Keys.ENTER)
+        time.sleep(5)
+
 
 
 

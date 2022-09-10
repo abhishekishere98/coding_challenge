@@ -15,6 +15,7 @@ class zoopla_landing_locs:
     zoopla_search_tabs = '//div[@role="tablist"]//button'
     zoopla_search_text_box = '//form[@role="search"]//input'
     button_search = '//button[@data-testid="search-btn"]'
+    button_sign_in = '//ul//li//a[text()="Sign in"]'
 
 
 class zoopla_landing_methods(PageInit, TestCase):
@@ -102,6 +103,24 @@ class zoopla_landing_methods(PageInit, TestCase):
         """
         common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
         self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[0].click()
+        time.sleep(3)
+
+    def click_sign_in_nav_link(self):
+        """
+        This method will click on To rent navigation link
+        :return: None
+        """
+        common_methods.wait_for_element(self.driver, zoopla_landing_locs.button_sign_in)
+        self.driver.find_element(By.XPATH, zoopla_landing_locs.button_sign_in).click()
+        time.sleep(3)
+
+    def click_saved_nav_link(self):
+        """
+        This method will click on To rent navigation link
+        :return: None
+        """
+        common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
+        self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[6].click()
         time.sleep(3)
 
     def yield_driver(self):

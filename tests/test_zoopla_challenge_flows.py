@@ -6,6 +6,7 @@ from page_objects.house_prices_search_screen import house_prices_search_methods
 from page_objects.to_rent_search_screen import to_rent_search_screen_methods
 from page_objects.travel_time_search_screen import travel_time_search
 from page_objects.zoopla_landing_screen import zoopla_landing_methods
+from page_objects.zoopla_login_screen import zoopla_login_methods
 
 
 class TestZoopla:
@@ -19,17 +20,21 @@ class TestZoopla:
         :return:
         """
         landing = zoopla_landing_methods(setup)
+        driver = landing.yield_driver()
         landing.goto_zoopla_home_page("https://zoopla.co.uk")
         landing.validate_landing_screen_elements()
+        landing.click_sign_in_nav_link()
+        login = zoopla_login_methods(driver)
+        login.validate_login_page_elements()
+        login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
         landing.click_to_rent_nav_link()
-        driver = landing.yield_driver()
         to_rent = to_rent_search_screen_methods(driver)
         to_rent.validate_to_rent_search_screen_elements()
         to_rent.enter_search_criteria_hit_search("London", 1, 1000)
         to_rent.validate_to_rent_search_results_screen_elements("London")
         to_rent.enter_min_price_range(800)
         to_rent.click_on_create_email_alert()
-        driver = to_rent.yield_driver()
+        to_rent
 
     def test_validate_house_prices_search_result(self, setup):
         """
@@ -93,6 +98,7 @@ class TestZoopla:
         for_sale.click_travel_time_search_link()
         travel_time = travel_time_search(driver)
         travel_time.validate_travel_time_search_page_elements()
+        travel_time.enter_search_criteria_hit_search("SE1 2LH", "15 minutes", "Driving")
 
 
     def test_retrive_saved_searches(self, setup):
