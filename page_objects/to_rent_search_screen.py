@@ -111,7 +111,7 @@ class to_rent_search_screen_methods(PageInit, TestCase):
         time.sleep(2)
         self.driver.find_element(By.XPATH, to_rent_search_screen_locs.button_search).click()
 
-    def validate_to_rent_search_results_screen_elements(self, search_area, bedrooms, price_range):
+    def validate_to_rent_search_results_screen_elements(self, search_area):
         """
         This method will validate search result screen elements
         :return: None

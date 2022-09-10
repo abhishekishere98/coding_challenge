@@ -1,7 +1,9 @@
 import time
 from unittest import TestCase
+from random import randint
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 from base.page_initial import PageInit
 from utils.common_methods import common_methods
@@ -32,6 +34,15 @@ class for_sale_search_screen_locs:
     button_create_email_alert = '//button//div[contains(text(), "Create email alert")]'
     dropdown_price_range_min = '//select[@data-testid="min_price"]'
     link_travel_time_search = '//aside[@data-testid="search-sidebar"]//a[contains(text(),"Travel time search")]'
+    button_filter = '//button[@data-testid="search-results-header_filters-button"]'
+    header_filter_your_results = '//h2[contains(text(),"Filter your results")]'
+    textbox_keywords_filter = '//input[@id="keywords"]'
+    button_update_results = '//button[text()="Update Results"]'
+    header_feature_description = '//section[@data-testid]//h2[@id="listing-features-heading"]'
+    text_feature_description_garage = '//section[@data-testid="page_features_section"]//*[contains(text(),"garage") or contains(text(),"Garage")]'
+    list_search_results = '//a[@data-testid="listing-details-link"]'
+
+
 
 
 class for_sale_search_screen_methods(PageInit, TestCase):
@@ -88,3 +99,95 @@ class for_sale_search_screen_methods(PageInit, TestCase):
             "'Flats' radio button is not displayed ")
         self.assertTrue(self.driver.find_element(By.XPATH, for_sale_search_screen_locs.button_search).is_displayed(),
                         "'Search' button is not displayed")
+
+    def enter_search_criteria_hit_search(self, area):
+        """
+        This method will enter area where property for sale will be listed and hit search
+        :param area: The area where property sale should be listed
+        :return: None
+        """
+        common_methods.wait_till_element_clickable(self.driver, for_sale_search_screen_locs.combobox_search_area)
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.combobox_search_area).click()
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.combobox_search_area).send_keys(area+Keys.ENTER)
+        # time.sleep(2)
+        # self.driver.find_element(for_sale_search_screen_locs.combobox_search_area).send_keys(Keys.ENTER)
+        time.sleep(2)
+
+    def validate_for_sale_search_results_screen_elements(self, search_area):
+        """
+        This method will validate search result screen elements
+        :return: None
+        """
+        common_methods.wait_till_element_is_visible(self.driver, for_sale_search_screen_locs.search_result_header)
+        self.assertTrue(self.driver.find_element(By.XPATH, f'//div[@data-testid="search-desktop-subheader"]//input['
+                                                           f'@value="{search_area}"]').is_displayed())
+        area = self.driver.find_element(By.XPATH, f'//div[@data-testid="search-desktop-subheader"]//input['
+                                                  f'@value="{search_area}"]').get_attribute("value")
+        self.assertTrue(area == search_area, "Search area is not same as user input")
+        self.assertTrue(
+            self.driver.find_element(By.XPATH, for_sale_search_screen_locs.search_result_header).is_displayed(),
+            "'Search Result' header is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 for_sale_search_screen_locs.dropdown_search_radius_search_filter).is_displayed(),
+                        "'Search radius' filter is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 for_sale_search_screen_locs.dropdown_bedrooms_search_filter).is_displayed(),
+                        "'Bedrooms' filter is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 for_sale_search_screen_locs.dropdown_property_type_search_filter).is_displayed(),
+                        "'Property type' radius filter is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 for_sale_search_screen_locs.dropdown_price_range_search_filter).is_displayed(),
+                        "'Price range' filter is not displayed")
+        self.assertTrue(
+            self.driver.find_element(By.XPATH, for_sale_search_screen_locs.button_search_filter).is_displayed(),
+            "'Search' button is not displayed")
+        self.assertTrue(
+            self.driver.find_element(By.XPATH, for_sale_search_screen_locs.button_create_email_alert).is_displayed(),
+            "'Create email alert' button is not displayed")
+
+    def enter_search_keyword(self, keyword):
+        """
+        This method will enter keyword for filtering search results and update search results
+        :param keyword: The keyword required to filter search results
+        :return: None
+        """
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.button_filter).click()
+        common_methods.wait_till_element_is_visible(self.driver, for_sale_search_screen_locs.header_filter_your_results)
+        time.sleep(1)
+        self.assertTrue(
+            self.driver.find_element(By.XPATH, for_sale_search_screen_locs.header_filter_your_results).is_displayed(),
+            "'Filter your results' header is not displayed")
+        self.assertTrue(
+            self.driver.find_element(By.XPATH, for_sale_search_screen_locs.textbox_keywords_filter).is_displayed(),
+            "'Filter your results' header is not displayed")
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.textbox_keywords_filter).send_keys(keyword)
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.button_update_results).click()
+        time.sleep(3)
+
+
+    def validate_keyword_search_successful(self,keyword):
+        """
+        This method will validate if keyword related search is successful by randomly selecting a result
+        and clicking on it to check if features and description section has garage keyword
+        :param keyword: The keyword searched
+        :return:None
+        """
+        elements = self.driver.find_elements(By.XPATH, for_sale_search_screen_locs.list_search_results)
+        if elements is not None or elements.__len__()() != 0:
+            random = randint(1, elements.__len__()+1)
+            elements[random].click()
+            common_methods.wait_for_element(self.driver, for_sale_search_screen_locs.header_feature_description)
+            time.sleep(3)
+            self.assertTrue(self.driver.find_elements(By.XPATH, for_sale_search_screen_locs.text_feature_description_garage),
+                            "Garage keyword is missing in search results")
+
+    def click_travel_time_search_link(self):
+        """
+        This method will click on travel time search link
+        :return: None
+        """
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, for_sale_search_screen_locs.link_travel_time_search).click()
+        time.sleep(2)
+

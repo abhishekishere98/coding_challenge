@@ -4,6 +4,7 @@ import pytest
 from page_objects.for_sale_search_screen import for_sale_search_screen_methods
 from page_objects.house_prices_search_screen import house_prices_search_methods
 from page_objects.to_rent_search_screen import to_rent_search_screen_methods
+from page_objects.travel_time_search_screen import travel_time_search
 from page_objects.zoopla_landing_screen import zoopla_landing_methods
 
 
@@ -25,7 +26,7 @@ class TestZoopla:
         to_rent = to_rent_search_screen_methods(driver)
         to_rent.validate_to_rent_search_screen_elements()
         to_rent.enter_search_criteria_hit_search("London", 1, 1000)
-        to_rent.validate_to_rent_search_results_screen_elements("London", 1, 1000)
+        to_rent.validate_to_rent_search_results_screen_elements("London")
         to_rent.enter_min_price_range(800)
         to_rent.click_on_create_email_alert()
         driver = to_rent.yield_driver()
@@ -69,17 +70,32 @@ class TestZoopla:
         driver = landing.yield_driver()
         for_sale = for_sale_search_screen_methods(driver)
         for_sale.validate_for_sale_search_screen_elements()
+        for_sale.enter_search_criteria_hit_search("London")
+        for_sale.validate_for_sale_search_results_screen_elements("London")
+        for_sale.enter_search_keyword("Garage")
+        for_sale.validate_keyword_search_successful("Garage")
 
 
-
-    def time_search_in_area(self, setup):
+    def test_time_search_in_area(self, setup):
         """
         Save a search for property within 15 minutes drive of SE1 2LH.
         :return:
         """
+        landing = zoopla_landing_methods(setup)
+        landing.goto_zoopla_home_page("https://zoopla.co.uk")
+        landing.validate_landing_screen_elements()
+        landing.click_for_sale_nav_link()
+        driver = landing.yield_driver()
+        for_sale = for_sale_search_screen_methods(driver)
+        for_sale.validate_for_sale_search_screen_elements()
+        for_sale.enter_search_criteria_hit_search("SE1 2LH")
+        for_sale.validate_for_sale_search_results_screen_elements("SE1 2LH")
+        for_sale.click_travel_time_search_link()
+        travel_time = travel_time_search(driver)
+        travel_time.validate_travel_time_search_page_elements()
 
 
-    def retrive_saved_searches(self, setup):
+    def test_retrive_saved_searches(self, setup):
         """
         Check that saved searches can be retrieved
         :return:
