@@ -34,14 +34,24 @@ class TestZoopla:
         to_rent.validate_to_rent_search_results_screen_elements("London")
         to_rent.enter_min_price_range(800)
         to_rent.click_on_create_email_alert()
-        to_rent
 
-    def test_validate_house_prices_search_result(self, setup):
+
+    def test_change_frequency_save_search(self, setup):
         """
         Change the frequency of an existing email update
         :param setup:
         :return:
         """
+        landing = zoopla_landing_methods(setup)
+        driver = landing.yield_driver()
+        landing.goto_zoopla_home_page("https://zoopla.co.uk")
+        landing.validate_landing_screen_elements()
+        landing.click_sign_in_nav_link()
+        login = zoopla_login_methods(driver)
+        login.validate_login_page_elements()
+        login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
+        landing.click_saved_nav_link()
+
 
     @pytest.mark.code_challenge
     def test_sale_house_prices_search(self, setup):

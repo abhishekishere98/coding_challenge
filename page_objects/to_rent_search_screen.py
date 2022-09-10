@@ -1,6 +1,7 @@
 import time
 from unittest import TestCase
 
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
 from base.page_initial import PageInit
@@ -32,6 +33,9 @@ class to_rent_search_screen_locs:
     button_create_email_alert = '//button//div[contains(text(), "Create email alert")]'
     dropdown_price_range_min = '//select[@data-testid="min_price"]'
     link_travel_time_search = '//aside[@data-testid="search-sidebar"]//a[contains(text(),"Travel time search")]'
+    button_save_search = '//button[text()="Save your search and alert"]'
+    msg_success_search_saved = '//h2[contains(text(),"Success! Your search")]'
+    link_manage_my_saved_searches = '//a[text()="Manage my saved searches"]//parent::div'
 
 
 class to_rent_search_screen_methods(PageInit, TestCase):
@@ -160,7 +164,24 @@ class to_rent_search_screen_methods(PageInit, TestCase):
         """
         self.driver.find_element(By.XPATH,
                                  to_rent_search_screen_locs.button_create_email_alert).click()
-        time.sleep(3)
+        common_methods.wait_till_element_clickable(self.driver, to_rent_search_screen_locs.button_save_search)
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,
+                                 to_rent_search_screen_locs.button_save_search).click()
+        time.sleep(2)
+        common_methods.wait_for_element(self.driver, to_rent_search_screen_locs.msg_success_search_saved)
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 to_rent_search_screen_locs.msg_success_search_saved).is_displayed(),
+                        "'Success' message is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 to_rent_search_screen_locs.link_manage_my_saved_searches).is_displayed(),
+                        "'Manage my saved searches' Link is not displayed")
+        time.sleep(2)
+        a = ActionChains(self.driver)
+        a.move_to_element(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.link_manage_my_saved_searches)).perform()
+        time.sleep(2)
+        a.click(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.link_manage_my_saved_searches)).perform()
+        time.sleep(5)
 
 
     def yield_driver(self):
