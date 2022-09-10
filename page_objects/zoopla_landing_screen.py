@@ -53,7 +53,7 @@ class zoopla_landing_methods(PageInit, TestCase):
             else:
                 pass
         expected_nav = ["For sale", "To rent", "House prices", "Agent valuation", "Instant valuation", "My Home", "Saved", "Sign in"]
-        self.assertListEqual(name_nav, expected_nav, f"Displayed Nav menu has incorrect text : {nav_list}")
+        self.assertListEqual(name_nav, expected_nav, f"Displayed Navigation menu has incorrect text : {name_nav}")
         tab_list = self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_search_tabs)
         name_tab = []
         for ele in tab_list:
@@ -132,7 +132,8 @@ class zoopla_landing_methods(PageInit, TestCase):
         This method will navigate user from landing page till saved searches page
         :return: None
         """
-        common_methods.wait_for_element()
+        common_methods.wait_till_element_clickable(self.driver, zoopla_landing_locs.link_saved_searches)
+        self.driver.find_element(By.XPATH, zoopla_landing_locs.link_saved_searches).click()
 
     def yield_driver(self):
         """
