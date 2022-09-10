@@ -22,13 +22,22 @@ class to_rent_search_screen_locs:
     radio_button_flats = '//div[@role="radiogroup"]//button[@role="radio" and @value="flats"]'
     labels_radio_buttons = '//button[@role="radio"]//following-sibling::div//label'
     button_search = '//button[@data-testid="search-btn"]'
+    # Search result section
+    search_result_header = '//div[@data-testid="search-desktop-subheader"]'
+    dropdown_search_radius_search_filter = '//div[@data-testid="search-desktop-subheader"]//select[@id="desktop_radius-filter"]'
+    dropdown_bedrooms_search_filter = '//div[@data-testid="search-desktop-subheader"]//button[@label="Bedrooms"]'
+    dropdown_price_range_search_filter = '//div[@data-testid="search-desktop-subheader"]//button[@label="Price range"]'
+    dropdown_property_type_search_filter = '//div[@data-testid="search-desktop-subheader"]//button[@label="Property type"]'
+    button_search_filter = '//button[@data-testid="search-button"]'
+    button_create_email_alert = '//button//div[contains(text(), "Create email alert")]'
+    dropdown_price_range_min = '//select[@data-testid="min_price"]'
 
 
 class to_rent_search_screen_methods(PageInit, TestCase):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def check_current_page_is_search_result(self):
+    def validate_to_rent_search_screen_elements(self):
         """
         This method will click on check if current page is search results
         :return:
@@ -101,10 +110,57 @@ class to_rent_search_screen_methods(PageInit, TestCase):
         time.sleep(2)
         self.driver.find_element(By.XPATH, to_rent_search_screen_locs.button_search).click()
 
-    def click_search_button(self):
+    def validate_to_rent_search_results_screen_elements(self, search_area, bedrooms, price_range):
         """
-        This method will click on search button to trigger search
+        This method will validate search result screen elements
         :return: None
         """
-        self.driver.find_element(to_rent_search_screen_locs.button_search).click()
+        common_methods.wait_till_element_is_visible(self.driver, to_rent_search_screen_locs.search_result_header)
+        self.assertTrue(self.driver.find_element(By.XPATH, f'//div[@data-testid="search-desktop-subheader"]//input['
+                                                           f'@value="{search_area}"]').is_displayed())
+        area = self.driver.find_element(By.XPATH, f'//div[@data-testid="search-desktop-subheader"]//input['
+                                                  f'@value="{search_area}"]').get_attribute("value")
+        self.assertTrue(area == search_area, "Search area is not same as user input")
+        self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.search_result_header).is_displayed(), "'Search Result' header is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.dropdown_search_radius_search_filter).is_displayed(), "'Search radius' filter is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.dropdown_bedrooms_search_filter).is_displayed(), "'Bedrooms' filter is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.dropdown_property_type_search_filter).is_displayed(), "'Property type' radius filter is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.dropdown_price_range_search_filter).is_displayed(), "'Price range' filter is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.button_search_filter).is_displayed(), "'Search' button is not displayed")
+        self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.button_create_email_alert).is_displayed(), "'Create email alert' button is not displayed")
+
+    def enter_min_price_range(self, min_price):
+        """
+        This method will enter minimum price range for rental search
+        :return:
+        """
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 to_rent_search_screen_locs.dropdown_price_range_search_filter).is_displayed(),
+                        "'Price range' filter is not displayed")
+        self.driver.find_element(By.XPATH,
+                                 to_rent_search_screen_locs.dropdown_price_range_search_filter).click()
+        time.sleep(2)
+        self.assertTrue(self.driver.find_element(By.XPATH,
+                                                 to_rent_search_screen_locs.dropdown_price_range_min).is_displayed(),
+                        "'Price range min' Dropdown is not displayed")
+        self.driver.find_element(By.XPATH,
+                                 to_rent_search_screen_locs.dropdown_price_range_min).click()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,
+                                 f'//select[@data-testid="min_price"]//option[contains(text(),"{"{:,}".format(min_price)} pcm")]').click()
+        self.driver.find_element(By.XPATH,
+                                 to_rent_search_screen_locs.button_search_filter).click()
+        time.sleep(5)
+
+    def click_on_create_email_alert(self):
+        """
+        This methos will click on Create email alert button
+        :return:None
+        """
+        self.driver.find_element(By.XPATH,
+                                 to_rent_search_screen_locs.button_create_email_alert).click()
         time.sleep(3)
+
+
+
+

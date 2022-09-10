@@ -40,10 +40,6 @@ class zoopla_landing_methods(PageInit, TestCase):
         time.sleep(3)
         self.assertTrue(self.driver.find_element(By.XPATH, zoopla_landing_locs.zoopla_logo).is_displayed(),
                         "Company Logo not displayed")
-        # self.assertTrue(self.driver.find_element(By.XPATH, zoopla_landing_locs.zoopla_slogan).is_displayed(),
-        #                 "Company slogan is not displayed")
-        # self.assertTrue(self.driver.find_element(By.XPATH, zoopla_landing_locs.zoopla_info_text).is_displayed(),
-        #                 "Info text is not displayed")
         nav_list = self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)
         name_nav = []
         for ele in nav_list:
@@ -51,8 +47,7 @@ class zoopla_landing_methods(PageInit, TestCase):
                 name_nav.append(ele.text)
             else:
                 pass
-        expected_nav = ["For sale", "To rent", "House prices", "Agent valuation", "Instant valuation", "My Home",
-                        "Saved", "Sign in"]
+        expected_nav = ["For sale", "To rent", "House prices", "Agent valuation", "Instant valuation", "My Home"]
         self.assertListEqual(name_nav, expected_nav, f"Displayed Nav menu has incorrect text : {nav_list}")
         tab_list = self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_search_tabs)
         name_tab = []
