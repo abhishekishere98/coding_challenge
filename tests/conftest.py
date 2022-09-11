@@ -11,5 +11,6 @@ def setup(request):
     yield driver
     driver.close()
 
+
 def pytest_addoption(parser):
-    parser.addoption("--selectbrowser", action="store")
+    parser.addoption("--selectbrowser", action="store", default="chrome")

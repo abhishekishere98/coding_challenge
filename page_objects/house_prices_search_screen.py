@@ -120,7 +120,7 @@ class house_prices_search_methods(PageInit, TestCase):
         :return: None
         """
         time.sleep(2)
-        common_methods.wait_till_element_clickable(self.driver, house_prices_search_loc.dropdown_last_sold_within)
+        common_methods.wait_till_element_is_visible(self.driver, house_prices_search_loc.dropdown_last_sold_within)
         self.driver.find_element(By.XPATH, house_prices_search_loc.dropdown_last_sold_within).click()
         common_methods.wait_till_element_is_visible(self.driver, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{last_sold_within}")]') # 3 months
         self.driver.find_element(By.XPATH, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{last_sold_within}")]').click()
