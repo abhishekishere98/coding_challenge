@@ -15,13 +15,6 @@ def setup(request):
     yield driver
     driver.close()
 
-def pytest_addoption(parser):
-    parser.addoption(
-        "--browser", action="define browser type", default="chrome", help="Enter chrome to launch chrome and firefox to launch firefox"
-        "--template", arguement="Defines the report type"
-        "--report", argument="Name of report file to be generated"
-    )
-
 
 def pytest_runtest_makereport(item):
     """
