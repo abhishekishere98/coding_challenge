@@ -1,4 +1,3 @@
-import allure
 import pytest
 
 from page_objects.alerts_and_searches_screen import alerts_searches_methods
@@ -12,6 +11,7 @@ from page_objects.zoopla_login_screen import zoopla_login_methods
 
 class TestZoopla:
 
+    @pytest.mark.code_challenge
     def test_zoopla_save_search_daily_subscription(self, setup):
         """
         Register for daily email updates on rental property in London for 1 bed properties between £800 and £1000 per month
@@ -40,6 +40,7 @@ class TestZoopla:
         alert_search.select_tab_for_sale("To rent")
         alert_search.validate_first_saved_record_to_rent("London", 1, 800, 1000, "Daily summary emails")
 
+    @pytest.mark.code_challenge
     def test_change_frequency_save_search(self, setup):
         """
         Change the frequency of an existing email update
@@ -87,6 +88,7 @@ class TestZoopla:
         house_prices.enter_price_search_criteria("3 months", "Any", "Sold (newest - oldest)")
         house_prices.validate_first_result("Flat 16, Radnor House, 1272 London Road, London, SW16 4EA")
 
+    @pytest.mark.code_challenge
     def test_for_sale_house_garage_search(self, setup):
         """
         Search houses for sale including the key word “garage” and check that results have garages
@@ -105,6 +107,7 @@ class TestZoopla:
         for_sale.enter_search_keyword("Garage")
         for_sale.validate_keyword_search_successful("Garage")
 
+    @pytest.mark.code_challenge
     def test_time_search_in_area(self, setup):
         """
         Save a search for property within 15 minutes drive of SE1 2LH.
@@ -129,6 +132,7 @@ class TestZoopla:
         travel_time.enter_search_criteria_hit_search("SE1 2LH", "15 minutes", "Driving")
         for_sale.click_save_results()
 
+    @pytest.mark.code_challenge
     def test_retrive_saved_searches(self, setup):
         """
         Check that saved searches can be retrieved

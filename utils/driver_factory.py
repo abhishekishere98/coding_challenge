@@ -8,7 +8,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 class DriverFactory:
     @staticmethod
     def get_driver(config) -> webdriver:
-        if config.lower() == "chromium":
+        if config.lower() == "chrome":
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
             driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
@@ -18,3 +18,5 @@ class DriverFactory:
             driver = webdriver.Firefox(service=Services(executable_path=GeckoDriverManager().install()), options=options)
             return driver
         raise Exception("Please provide a valid \"driver\" name")
+
+
