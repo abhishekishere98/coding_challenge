@@ -1,5 +1,3 @@
-allure-pytest
-allure-python-commons
 atomicwrites
 attrs
 certifi
@@ -17,6 +15,7 @@ pluggy
 py
 pyparsing
 pytest
+pytest-reporter-html1
 requests
 selenium
 six
