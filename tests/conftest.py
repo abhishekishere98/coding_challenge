@@ -9,8 +9,8 @@ driver = None
 @pytest.fixture(autouse=True)
 def setup(request):
     global driver
-    browser_name = request.config.getoption("browser")
-    driver = DriverFactory.get_driver(browser_name[0])
+    browser_name = request.config.getoption("--browser")
+    driver = DriverFactory.get_driver(browser_name)
 
     yield driver
     driver.close()
