@@ -15,6 +15,9 @@ def setup(request):
     yield driver
     driver.close()
 
+def pytest_addoption(parser):
+    parser.addoption('--browser', action='store')
+
 
 def pytest_runtest_makereport(item):
     """
