@@ -36,4 +36,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test zoopla
       run: |
-        pytest --browser chromium --template=html1/index.html --report=report.html
+        pytest --browser chrome --template=html1/index.html --report=report.html
