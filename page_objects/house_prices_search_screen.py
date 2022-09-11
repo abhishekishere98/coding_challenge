@@ -71,14 +71,15 @@ class house_prices_search_methods(PageInit, TestCase):
         self.driver.find_element(By.XPATH, house_prices_search_loc.textbox_search_area).send_keys(area_postcode)
         time.sleep(2)
         self.driver.find_element(By.XPATH, house_prices_search_loc.textbox_search_area).send_keys(Keys.ENTER)
-        time.sleep(2)
+        time.sleep(4)
 
     def validate_house_price_search_result_elements(self):
         """
         This method will validate the house price search result screen elements
         :return: None
         """
-        common_methods.wait_for_element(self.driver, house_prices_search_loc.list_result_list)
+        common_methods.wait_for_element(self.driver, house_prices_search_loc.header_house_prices_search_results)
+        time.sleep(1)
         self.assertTrue(
             self.driver.find_element(By.XPATH,
                                      house_prices_search_loc.header_house_prices_search_results).is_displayed(),
@@ -110,6 +111,7 @@ class house_prices_search_methods(PageInit, TestCase):
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.list_result_list).is_displayed(),
             "Search results list is not displayed")
+        time.sleep(2)
 
     def enter_price_search_criteria(self, last_sold_within, property_type, sort):
         """

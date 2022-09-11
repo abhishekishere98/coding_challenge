@@ -39,7 +39,6 @@ pytest-forked
 pytest-playwright
 pytest-reporter
 pytest-reporter-html1
-pytest-xdist
 python-dotenv
 python-slugify
 requests

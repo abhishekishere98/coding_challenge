@@ -59,5 +59,5 @@ class zoopla_login_methods(PageInit, TestCase):
         self.driver.find_element(By.XPATH, zoopla_sign_in_locs.textbox_password).send_keys(password)
         time.sleep(2)
         self.driver.find_element(By.XPATH, zoopla_sign_in_locs.button_signin).click()
-        time.sleep(5)
+        time.sleep(4)
 

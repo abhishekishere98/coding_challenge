@@ -87,6 +87,7 @@ class zoopla_landing_methods(PageInit, TestCase):
         This method will click on To rent navigation link
         :return: None
         """
+        time.sleep(2)
         common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
         self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[1].click()
         time.sleep(3)
@@ -96,6 +97,7 @@ class zoopla_landing_methods(PageInit, TestCase):
         This method will click on To rent navigation link
         :return: None
         """
+        time.sleep(2)
         common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
         self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[2].click()
         time.sleep(3)
@@ -105,6 +107,7 @@ class zoopla_landing_methods(PageInit, TestCase):
         This method will click on To rent navigation link
         :return: None
         """
+        time.sleep(2)
         common_methods.wait_for_elements(self.driver, zoopla_landing_locs.zoopla_naviagtion_links)
         self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_naviagtion_links)[0].click()
         time.sleep(3)
@@ -114,15 +117,17 @@ class zoopla_landing_methods(PageInit, TestCase):
         This method will click on To rent navigation link
         :return: None
         """
+        time.sleep(2)
         common_methods.wait_for_element(self.driver, zoopla_landing_locs.button_sign_in)
         self.driver.find_element(By.XPATH, zoopla_landing_locs.button_sign_in).click()
-        time.sleep(3)
+        time.sleep(4)
 
     def click_account_nav_link(self):
         """
         This method will click on To rent navigation link
         :return: None
         """
+        time.sleep(2)
         common_methods.wait_for_element(self.driver, zoopla_landing_locs.button_account)
         self.driver.find_element(By.XPATH, zoopla_landing_locs.button_account).click()
         time.sleep(3)

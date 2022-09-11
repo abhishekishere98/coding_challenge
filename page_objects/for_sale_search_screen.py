@@ -43,7 +43,7 @@ class for_sale_search_screen_locs:
     textbox_keywords_filter = '//input[@id="keywords"]'
     button_update_results = '//button[text()="Update Results"]'
     header_feature_description = '//section[@data-testid]//h2[@id="listing-features-heading"]'
-    text_feature_description_garage = '//section[@data-testid="page_features_section"]//*[contains(text(),"garage") or contains(text(),"Garage")]'
+    text_feature_description_garage = '//*[contains(text(),"garage") or contains(text(),"Garage")]'
     list_search_results = '//a[@data-testid="listing-details-link"]'
     button_save_search_for_sale_result = '//div[text()="Save this search"]//parent::div//parent::button'
     button_save_search = '//button[text()="Save your search and alert"]'
@@ -200,7 +200,7 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         """
         elements = self.driver.find_elements(By.XPATH, for_sale_search_screen_locs.list_search_results)
         if elements is not None or elements.__len__() != 0:
-            random = randint(1, elements.__len__())
+            random = randint(0, elements.__len__()-1)
             elements[random].click()
             common_methods.wait_for_element(self.driver, for_sale_search_screen_locs.header_feature_description)
             time.sleep(3)
