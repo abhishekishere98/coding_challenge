@@ -1,8 +1,8 @@
-from extentions.webdrivers_extnd import WebDriverExtended
+from selenium import webdriver
 
 
 class PageInit:
-    def __init__(self, driver: WebDriverExtended):
+    def __init__(self, driver: webdriver):
         self.driver = driver
 
     def open(self):
