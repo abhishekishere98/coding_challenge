@@ -200,7 +200,7 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         """
         elements = self.driver.find_elements(By.XPATH, for_sale_search_screen_locs.list_search_results)
         if elements is not None or elements.__len__() != 0:
-            random = randint(0, elements.__len__())
+            random = randint(1, elements.__len__())
             elements[random].click()
             common_methods.wait_for_element(self.driver, for_sale_search_screen_locs.header_feature_description)
             time.sleep(3)
