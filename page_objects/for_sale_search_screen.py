@@ -250,7 +250,7 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         """
         # Wait till search results appear
         common_methods.wait_till_element_is_visible(self.driver, for_sale_search_screen_locs.button_save_search_for_sale_result)
-        time.sleep(1)
+        time.sleep(3)
         # Click on a result randomly if results are displayed
         elements = self.driver.find_elements(By.XPATH, for_sale_search_screen_locs.list_search_results)
         if elements is not None or elements.__len__() != 0:
@@ -320,6 +320,7 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         # wait for page load
         common_methods.wait_till_element_clickable(self.driver,
                                                    for_sale_search_screen_locs.dropdown_price_range_search_filter)
+        time.sleep(2)
         # Validate area
         self.assertTrue(
             self.driver.find_element(By.XPATH, for_sale_search_screen_locs.textbox_search_area).get_attribute(
