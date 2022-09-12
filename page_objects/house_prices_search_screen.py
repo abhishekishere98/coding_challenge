@@ -9,6 +9,9 @@ from utils.common_methods import common_methods
 
 
 class house_prices_search_loc:
+    """
+    This Class will store all locators for Alerts and Searches screen
+    """
     header_house_prices_search = "//h1[normalize-space()='Research sold house prices']"
     sub_header_house_prices_search = "//div[@id='main-content']//div//p[contains(text(),'get started')]"
     label_search_area = "//label[text()='Search area']"
@@ -29,36 +32,51 @@ class house_prices_search_loc:
 
 
 class house_prices_search_methods(PageInit, TestCase):
+
+    """
+    This class is to bind the methods and locators of House price search and result page together, by implementing execution
+    steps related to this page within this file. It implements PageInit and Testcase classes to support webdriver and
+    Junit assertions
+    """
     def __init__(self, driver):
+        """
+        This is constructor for page object which will initialise the driver
+        :param driver: webdriver instance to perform required actions
+        """
         super().__init__(driver)
 
     def validate_house_prices_search_page_elements(self):
         """
         This method validates all the elements displayed in House Prices search page
         (Currently limited to fields relevant to challenge)
-        :return:
+        :return: None
         """
+        # Wait for page load
         common_methods.wait_for_element(self.driver, house_prices_search_loc.button_house_prices_search)
         time.sleep(3)
+        # Heading check, Text check is skipped as xpath does a text comparison
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.header_house_prices_search).is_displayed(),
             "House prices search header is not displayed")
+        # Sub heading check
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.sub_header_house_prices_search).is_displayed(),
             "House prices search sub header is not displayed")
         text = self.driver.find_element(By.XPATH, house_prices_search_loc.sub_header_house_prices_search).text
         self.assertTrue("Enter a UK town or street name to get started." == text, "sub header text is in correct")
+        # Search area
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.label_search_area).is_displayed(),
             "Search area label is not displayed")
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.textbox_search_area).is_displayed(),
             "Street or pincode search textbox is not displayed")
+        # Search button
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.button_house_prices_search).is_displayed(),
             "Search button is not displayed")
 
-    def enter_area_postcode_and_hit_search(self, area_postcode):
+    def enter_area_postcode_and_hit_search(self, area_postcode: str):
         """
         This method will enter the area/postcode in house prices search based on test data
         :param area_postcode: Either area or postcode where search needs to be done
@@ -78,42 +96,49 @@ class house_prices_search_methods(PageInit, TestCase):
         This method will validate the house price search result screen elements
         :return: None
         """
+        # Wait for page load
         common_methods.wait_for_element(self.driver, house_prices_search_loc.header_house_prices_search_results)
         time.sleep(1)
+        # Heading
         self.assertTrue(
             self.driver.find_element(By.XPATH,
                                      house_prices_search_loc.header_house_prices_search_results).is_displayed(),
             "House prices results header is not displayed")
+        # Sub Headings
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.text_average_price).is_displayed(),
             "Search result page text info about average property prices not displayed")
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.text_info_average_price).is_displayed(),
             "Search result page text info about different average property prices not displayed")
+        # Last sold
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.label_last_sold_within).is_displayed(),
             "'Last sold within' label is not displayed")
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.dropdown_last_sold_within).is_displayed(),
             "'Last sold dropdown' label is not displayed")
+        # Property type
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.label_property_type).is_displayed(),
             "'Property type' label is not displayed")
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.dropdown_property_type).is_displayed(),
             "'Property type' dropdown is not displayed")
+        # Sort
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.label_sort).is_displayed(),
             "'Sort' label is not displayed")
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.dropdown_sort).is_displayed(),
             "'Sort' dropdown is not displayed")
+        # Search button
         self.assertTrue(
             self.driver.find_element(By.XPATH, house_prices_search_loc.list_result_list).is_displayed(),
             "Search results list is not displayed")
         time.sleep(2)
 
-    def enter_price_search_criteria(self, last_sold_within, property_type, sort):
+    def enter_price_search_criteria(self, last_sold_within: str, property_type: str, sort: str):
         """
         This method will enter criteria to search for house prices
         :param last_sold_within: Filter criteria for results
@@ -121,30 +146,32 @@ class house_prices_search_methods(PageInit, TestCase):
         :param sort: Filter criteria for results
         :return: None
         """
+        # Last sold within
         time.sleep(2)
         common_methods.wait_till_element_is_visible(self.driver, house_prices_search_loc.dropdown_last_sold_within)
         self.driver.find_element(By.XPATH, house_prices_search_loc.dropdown_last_sold_within).click()
         common_methods.wait_till_element_is_visible(self.driver, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{last_sold_within}")]') # 3 months
         self.driver.find_element(By.XPATH, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{last_sold_within}")]').click()
         time.sleep(2)
+        # Property Type
         self.driver.find_element(By.XPATH, house_prices_search_loc.dropdown_property_type).click()
         common_methods.wait_till_element_is_visible(self.driver, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{property_type}")]') # Any
         self.driver.find_element(By.XPATH, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{property_type}")]').click()
         time.sleep(2)
+        # Sort
         self.driver.find_element(By.XPATH, house_prices_search_loc.dropdown_sort).click()
         common_methods.wait_till_element_is_visible(self.driver, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{sort}")]') # Sold (newest - oldest)
         self.driver.find_element(By.XPATH, f'//ul[@role="listbox"]//li[@role="option"]//div[contains(text(),"{sort}")]').click()
         time.sleep(2)
         common_methods.wait_till_element_is_visible(self.driver, house_prices_search_loc.list_result_list)
 
-    def validate_first_result(self, property_name):
+    def validate_first_result(self, property_name: str):
         """
         This method will validate if the first search result matches with the property expected
         :param property_name: Name of the property expected in first search result
         :return: None
         """
         time.sleep(3)
-        # property_name = "Flat 16, Radnor House, 1272 London Road, London, SW16 4EA"
         element = self.driver.find_elements(By.XPATH, house_prices_search_loc.list_result_names)[0]
         self.assertTrue(element.text == property_name, "First result doesnt match with expected property")
 

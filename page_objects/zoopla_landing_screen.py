@@ -137,7 +137,8 @@ class zoopla_landing_methods(PageInit, TestCase):
         This method will navigate user from landing page till saved searches page
         :return: None
         """
-        common_methods.wait_till_element_clickable(self.driver, zoopla_landing_locs.link_saved_searches)
+        common_methods.wait_till_element_is_visible(self.driver, zoopla_landing_locs.link_saved_searches)
+        time.sleep(2)
         self.driver.find_element(By.XPATH, zoopla_landing_locs.link_saved_searches).click()
 
     def yield_driver(self):
