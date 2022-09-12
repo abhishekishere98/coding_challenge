@@ -10,4 +10,5 @@ This project implements following concepts:
 4) Basic report generation at Testcase level (--template and --report passed from CLI for format and report filename)
 5) Parallel execution by multiple browser instances (-n passed through CLI)
 6) Test data is driven from a separate file
+7) Remote Execution
 7) suggested execution command from pycharm terminal : pytest --selectbrowser=chrome --template=html1/index.html --report=report.html -n 2
