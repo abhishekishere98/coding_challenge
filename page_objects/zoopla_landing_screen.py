@@ -54,6 +54,7 @@ class zoopla_landing_methods(PageInit, TestCase):
                 pass
         expected_nav = ["For sale", "To rent", "House prices", "Agent valuation", "Instant valuation", "My Home", "Saved", "Sign in"]
         self.assertListEqual(name_nav, expected_nav, f"Displayed Navigation menu has incorrect text : {name_nav}")
+        time.sleep(3)
         tab_list = self.driver.find_elements(By.XPATH, zoopla_landing_locs.zoopla_search_tabs)
         name_tab = []
         for ele in tab_list:
