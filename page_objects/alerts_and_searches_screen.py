@@ -73,10 +73,6 @@ class alerts_searches_methods(PageInit, TestCase):
                         "Tab residential not displayed")
         self.assertTrue(self.driver.find_element(By.XPATH, alerts_searches_locs.tab_commercial).is_displayed(),
                         "Tab commercial not displayed")
-        self.assertTrue(self.driver.find_element(By.XPATH, alerts_searches_locs.tab_to_rent).is_displayed(),
-                        "Tab To rent not displayed")
-        self.assertTrue(self.driver.find_element(By.XPATH, alerts_searches_locs.tab_for_sale).is_displayed(),
-                        "Tab For sale not displayed")
         # Validation for column names displayed
         col_list = self.driver.find_elements(By.XPATH, alerts_searches_locs.column_header_alerts_searches)
         name_col = []

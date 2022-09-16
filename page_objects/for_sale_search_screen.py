@@ -17,7 +17,7 @@ class for_sale_search_screen_locs:
     This Class will store all locators pertaining to For sale search and results screens
     """
     header_for_sale_page = '//div[@id="main-content"]//h1[contains(text(),"Properties for sale")]'
-    sub_header_for_sale_page = '//div[@id="main-content"]//p[contains(text(),"Search houses")]'
+    sub_header_for_sale_page = '//div[@id="main-content"]//p[contains(text(),"for sale in the UK")]'
     label_search_area = '//label[text()="Search area"]'
     combobox_search_area = '//input[@placeholder="e.g. Oxford or NW3"]'
     label_bedrooms = '//label[text()="Bedrooms"]'
@@ -45,12 +45,12 @@ class for_sale_search_screen_locs:
     button_filter = '//button[@data-testid="search-results-header_filters-button"]'
     header_filter_your_results = '//h2[contains(text(),"Filter your results")]'
     textbox_keywords_filter = '//input[@id="keywords"]'
-    button_update_results = '//button[text()="Update Results"]'
+    button_update_results = '//div[text()="Update Results"]//parent::button'
     header_feature_description = '//section[@data-testid]//h2[@id="listing-features-heading"]'
     text_feature_description_garage = '//*[contains(text(),"garage") or contains(text(),"Garage")]'
     list_search_results = '//a[@data-testid="listing-details-link"]'
     button_save_search_for_sale_result = '//div[text()="Save this search"]//parent::div//parent::button'
-    button_save_search = '//button[text()="Save your search and alert"]'
+    button_save_search = '//div[text()="Save your search and alert"]//parent::button'
     dropdown_alert_frequency = '//select[@id="alert_frequency"]'
     msg_success_search_saved = '//h2[contains(text(),"Success! Your search")]'
     link_manage_my_saved_searches = '//a[text()="Manage my saved searches"]//parent::div'
@@ -78,6 +78,7 @@ class for_sale_search_screen_methods(PageInit, TestCase):
         """
         # Check for heading, text check is skipped and xpath compares for exact text match
         common_methods.wait_for_element(self.driver, for_sale_search_screen_locs.header_for_sale_page)
+        time.sleep(2)
         self.assertTrue(
             self.driver.find_element(By.XPATH, for_sale_search_screen_locs.header_for_sale_page).is_displayed(),
             "For sale search page header is not displayed")
@@ -86,7 +87,7 @@ class for_sale_search_screen_methods(PageInit, TestCase):
             self.driver.find_element(By.XPATH, for_sale_search_screen_locs.sub_header_for_sale_page).is_displayed(),
             "For sale search page header is not displayed")
         sub_header = self.driver.find_element(By.XPATH, for_sale_search_screen_locs.sub_header_for_sale_page).text
-        exp_sub_header = "Search houses and flats for sale across the UK"
+        exp_sub_header = "Search flats and houses for sale in the UK"
         self.assertTrue(exp_sub_header == sub_header, "Incorrect sub-header displayed in For sale search page")
         # Search area validation
         self.assertTrue(

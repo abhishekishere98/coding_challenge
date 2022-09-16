@@ -14,7 +14,7 @@ class to_rent_search_screen_locs:
     This Class will store all locators for To rent search screen
     """
     header_to_rent_page = '//div[@id="main-content"]//h1[contains(text(),"Properties to rent")]'
-    sub_header_to_rent_page = '//div[@id="main-content"]//p[contains(text(),"Search houses")]'
+    sub_header_to_rent_page = '//div[@id="main-content"]//p[contains(text(),"to rent in the UK")]'
     label_search_area = '//label[text()="Search area"]'
     combobox_search_area = '//input[@placeholder="e.g. Oxford or NW3"]'
     label_bedrooms = '//label[text()="Bedrooms"]'
@@ -37,7 +37,7 @@ class to_rent_search_screen_locs:
     button_create_email_alert = '//button//div[contains(text(), "Create email alert")]'
     dropdown_price_range_min = '//select[@data-testid="min_price"]'
     link_travel_time_search = '//aside[@data-testid="search-sidebar"]//a[contains(text(),"Travel time search")]'
-    button_save_search = '//button[text()="Save your search and alert"]'
+    button_save_search = '//div[text()="Save your search and alert"]//parent::button'
     dropdown_alert_frequency = '//select[@id="alert_frequency"]'
     msg_success_search_saved = '//h2[contains(text(),"Success! Your search")]'
     link_manage_my_saved_searches = '//a[text()="Manage my saved searches"]//parent::div'
@@ -64,6 +64,7 @@ class to_rent_search_screen_methods(PageInit, TestCase):
         """
         # Wait for page load
         common_methods.wait_for_element(self.driver, to_rent_search_screen_locs.header_to_rent_page)
+        time.sleep(2)
         # Heading, text comparison is not done as xpath does a text match
         self.assertTrue(
             self.driver.find_element(By.XPATH, to_rent_search_screen_locs.header_to_rent_page).is_displayed(),
@@ -73,7 +74,7 @@ class to_rent_search_screen_methods(PageInit, TestCase):
             self.driver.find_element(By.XPATH, to_rent_search_screen_locs.sub_header_to_rent_page).is_displayed(),
             "To rent search page header is not displayed")
         sub_header = self.driver.find_element(By.XPATH, to_rent_search_screen_locs.sub_header_to_rent_page).text
-        exp_sub_header = "Search houses and flats to rent across the UK"
+        exp_sub_header = "Search flats and houses to rent in the UK"
         self.assertTrue(exp_sub_header == sub_header, "Incorrect sub-header displayed in To rent search page")
         # Search area
         self.assertTrue(self.driver.find_element(By.XPATH, to_rent_search_screen_locs.label_search_area).is_displayed(),
