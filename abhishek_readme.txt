@@ -1,7 +1,3 @@
-Hello Zoopla,
-
-Thank you for considering me for this opportunity. I would like to add some basic details aout this project for ease validation/analysis.
-
 This project implements following concepts:
 
 1) Page Object Model for locators and methods management
