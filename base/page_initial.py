@@ -7,3 +7,10 @@ class PageInit:
 
     def open(self):
         self.driver.open()
+
+    def yield_driver(self):
+        """
+        This method will return the driver
+        :return: None
+        """
+        return self.driver

@@ -1,6 +1,6 @@
 import time
-from unittest import TestCase
 from random import randint
+from unittest import TestCase
 
 from selenium import webdriver
 from selenium.webdriver import ActionChains

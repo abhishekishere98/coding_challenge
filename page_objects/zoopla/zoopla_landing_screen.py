@@ -33,8 +33,6 @@ class zoopla_landing_methods(PageInit, TestCase):
         :return: None
         """
         self.driver.get(url)
-        expected_url = "https://www.zoopla.co.uk/"
-        # self.driver.
 
     def validate_landing_screen_elements(self):
         """

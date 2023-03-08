@@ -1,12 +1,12 @@
 import pytest
 
-from page_objects.alerts_and_searches_screen import alerts_searches_methods
-from page_objects.for_sale_search_screen import for_sale_search_screen_methods
-from page_objects.house_prices_search_screen import house_prices_search_methods
-from page_objects.to_rent_search_screen import to_rent_search_screen_methods
-from page_objects.travel_time_search_screen import travel_time_search
-from page_objects.zoopla_landing_screen import zoopla_landing_methods
-from page_objects.zoopla_login_screen import zoopla_login_methods
+from page_objects.zoopla.alerts_and_searches_screen import alerts_searches_methods
+from page_objects.zoopla.for_sale_search_screen import for_sale_search_screen_methods
+from page_objects.zoopla.house_prices_search_screen import house_prices_search_methods
+from page_objects.zoopla.to_rent_search_screen import to_rent_search_screen_methods
+from page_objects.zoopla.travel_time_search_screen import travel_time_search
+from page_objects.zoopla.zoopla_landing_screen import zoopla_landing_methods
+from page_objects.zoopla.zoopla_login_screen import zoopla_login_methods
 
 
 class TestZoopla:

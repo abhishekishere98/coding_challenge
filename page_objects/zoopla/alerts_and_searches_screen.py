@@ -1,5 +1,5 @@
-import time
 import datetime
+import time
 from unittest import TestCase
 
 from selenium import webdriver
