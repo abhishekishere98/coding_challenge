@@ -11,6 +11,10 @@ from base.page_initial import PageInit
 
 class common_methods:
     def __init__(self, driver: webdriver):
+        """
+        Constructor for common methods class to initialise driver
+        :param driver:
+        """
         self.driver = driver
 
     def wait_for_element(self, element) -> WebElement:
@@ -28,7 +32,7 @@ class common_methods:
             .until(EC.element_to_be_clickable((By.XPATH, element)))
         return element_found
 
-    def wait_for_elements(self, element) -> WebElement:
+    def wait_for_elements(self, element) -> list[WebElement]:
         elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
             .until(EC.presence_of_all_elements_located((By.XPATH, element)))
         return elements_found
@@ -42,47 +46,60 @@ class common_methods:
         :return: Returns the web element if found
         """
         # Identify element based on identifier type and identifier provided
-        match identifier.toUpper():
+        match identifier.upper():
             # Find element by XPATH
             case "XPATH":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.XPATH, element)))
+                    .until(EC.presence_of_element_located((By.XPATH, element)))
                 return elements_found
             # Find element by Name
             case "NAME":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.NAME, element)))
+                    .until(EC.presence_of_element_located((By.NAME, element)))
                 return elements_found
             # Find element by ID
             case "ID":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.ID, element)))
+                    .until(EC.presence_of_element_located((By.ID, element)))
                 return elements_found
             # Find element by CSS
             case "CSS":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, element)))
+                    .until(EC.presence_of_element_located((By.CSS_SELECTOR, element)))
                 return elements_found
             # Find element by Class
             case "CLASS":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.CLASS_NAME, element)))
+                    .until(EC.presence_of_element_located((By.CLASS_NAME, element)))
                 return elements_found
             # Find element by Link Text
             case "LINK TEXT":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.LINK_TEXT, element)))
+                    .until(EC.presence_of_element_located((By.LINK_TEXT, element)))
                 return elements_found
             # Find element by Partial Link Test
             case "PARTIAL LINK TEXT":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.PARTIAL_LINK_TEXT, element)))
+                    .until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, element)))
                 return elements_found
             # Find element by TAG
             case "TAG":
                 elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
-                    .until(EC.presence_of_all_elements_located((By.TAG_NAME, element)))
+                    .until(EC.presence_of_element_located((By.TAG_NAME, element)))
                 return elements_found
+
+    def get_text_from_element(self, element: WebElement) -> string:
+        """
+        Methods returns text from a web element
+        :param element: The web element from which text is needed
+        :return: Text value from web element
+        """
+        if element.text is not None or element.text != "":
+            return element.text
+        elif self.get_text_from_element(element) is not None or self.get_text_from_element(element) != "":
+            return self.get_text_from_element(element)
+
+
 
     def goto_url(self, goto_url: string):
         """

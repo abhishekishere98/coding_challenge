@@ -33,7 +33,7 @@ py
 pycparser
 pyee
 pyparsing
-pytest~=7.1.2
+pytest
 pytest-base-url
 pytest-forked
 pytest-playwright
@@ -42,7 +42,7 @@ pytest-reporter-html1
 python-dotenv
 python-slugify
 requests
-selenium~=4.7.2
+selenium
 setuptools
 six
 sniffio
