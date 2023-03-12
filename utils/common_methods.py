@@ -2,6 +2,8 @@ import string
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.ie.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from base.page_initial import PageInit
@@ -11,25 +13,76 @@ class common_methods:
     def __init__(self, driver: webdriver):
         self.driver = driver
 
-    def wait_for_element(self, element):
-        element_found = WebDriverWait(self.driver.driver, 5000, 500)\
+    def wait_for_element(self, element) -> WebElement:
+        element_found = WebDriverWait(self.driver.driver, 5000, 500) \
             .until(EC.presence_of_element_located((By.XPATH, element)))
         return element_found
 
-    def wait_till_element_is_visible(self, element):
-        element_found = WebDriverWait(self.driver.driver, 5000, 500)\
+    def wait_till_element_is_visible(self, element) -> WebElement:
+        element_found = WebDriverWait(self.driver.driver, 5000, 500) \
             .until(EC.visibility_of_element_located((By.XPATH, element)))
         return element_found
 
-    def wait_till_element_clickable(self, element):
-        element_found = WebDriverWait(self.driver.driver, 5000, 500)\
+    def wait_till_element_clickable(self, element) -> WebElement:
+        element_found = WebDriverWait(self.driver.driver, 5000, 500) \
             .until(EC.element_to_be_clickable((By.XPATH, element)))
         return element_found
 
-    def wait_for_elements(self, element):
-        elements_found = WebDriverWait(self.driver.driver, 5000, 500)\
+    def wait_for_elements(self, element) -> WebElement:
+        elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
             .until(EC.presence_of_all_elements_located((By.XPATH, element)))
         return elements_found
+
+    def find_element(self, identifier: string, element: string) -> WebElement:
+        """
+
+        :param identifier: Mention the identifier type to be used, Valid Values : XPATH, NAME, ID, CSS, CLASS, LINK TEXT,
+        PARTIAL LINK TEXT, TAG
+        :param element: Valid identifier value like a xpath or element name
+        :return: Returns the web element if found
+        """
+        # Identify element based on identifier type and identifier provided
+        match identifier.toUpper():
+            # Find element by XPATH
+            case "XPATH":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.XPATH, element)))
+                return elements_found
+            # Find element by Name
+            case "NAME":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.NAME, element)))
+                return elements_found
+            # Find element by ID
+            case "ID":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.ID, element)))
+                return elements_found
+            # Find element by CSS
+            case "CSS":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, element)))
+                return elements_found
+            # Find element by Class
+            case "CLASS":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.CLASS_NAME, element)))
+                return elements_found
+            # Find element by Link Text
+            case "LINK TEXT":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.LINK_TEXT, element)))
+                return elements_found
+            # Find element by Partial Link Test
+            case "PARTIAL LINK TEXT":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.PARTIAL_LINK_TEXT, element)))
+                return elements_found
+            # Find element by TAG
+            case "TAG":
+                elements_found = WebDriverWait(self.driver.driver, 5000, 500) \
+                    .until(EC.presence_of_all_elements_located((By.TAG_NAME, element)))
+                return elements_found
 
     def goto_url(self, goto_url: string):
         """
@@ -39,7 +92,7 @@ class common_methods:
         """
         self.driver.get(goto_url)
 
-    def yield_driver(self):
+    def yield_driver(self) -> WebDriver:
         """
         This method will return the driver
         :return: None
