@@ -7,6 +7,7 @@ from utils.driver_factory import DriverFactory
 def setup(request):
     browser_name = request.config.getoption("--selectbrowser")
     driver = DriverFactory.get_driver(browser_name)
+    print("Browser value passed from command line: " + browser_name)
 
     yield driver
     driver.close()
@@ -14,3 +15,4 @@ def setup(request):
 
 def pytest_addoption(parser):
     parser.addoption("--selectbrowser", action="store", default="chrome")
+
