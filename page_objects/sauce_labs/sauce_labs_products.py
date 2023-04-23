@@ -1,13 +1,15 @@
+import random
 from unittest import TestCase
 
 from utils.common_methods import common_methods
 
 
-class landing_page_locs:
+class all_products_page_locs:
     txt_header = '//div[@class="header_label"]//div[@class="app_logo" and text()="Swag Labs"]'
     txt_title = '//span[@class="title" and text()="Products"]'
     dd_filter_sort = '//span[@class="select_container"]//select'
     icon_cart = '//div[@id="shopping_cart_container"]'
+    cart_products_no = '//span[@class="shopping_cart_badge"]'
     item_product = '//div[@class="inventory_item"]'
     item_product_names = '//div[@class="inventory_item_name"]'
     list_items_names = ["Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
@@ -23,7 +25,11 @@ class landing_page_locs:
     btn_add_to_cart = '//button[contains(@id, "add-to-cart")]'
 
 
-class landing_page_methods(common_methods, TestCase):
+class all_products_page_methods(common_methods, TestCase):
+    product_no_cart = 0
+    product_nos_cart = []
+    product_details = []
+
 
     def validate_products_all_products_page(self):
         """
@@ -31,29 +37,78 @@ class landing_page_methods(common_methods, TestCase):
         :return: None
         """
         # Validate Swag Labs header is displayed correctly
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.txt_header).is_displayed(),
+        self.assertTrue(self.wait_till_element_is_visible(all_products_page_locs.txt_header).is_displayed(),
                         "Swag Labs Header is displayed")
-        self.assertTrue(self.get_text_from_element(self.find_element("xpath", landing_page_locs.txt_header))
+        self.assertTrue(self.get_text_from_element(self.find_element("xpath", all_products_page_locs.txt_header))
                         == "Swag Labs", "Swag Labs header is displayed with correct text")
         # Validate Products heading is displayed correctly
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.txt_title).is_displayed(),
+        self.assertTrue(self.wait_till_element_is_visible(all_products_page_locs.txt_title).is_displayed(),
                         "Products Tile is displayed")
-        self.assertTrue(self.get_text_from_element(self.find_element("xpath", landing_page_locs.txt_title))
+        self.assertTrue(self.get_text_from_element(self.find_element("xpath", all_products_page_locs.txt_title))
                         == "Products", "Products title is displayed with correct text")
         # Validate the Products displayed in All Products page
         # Validate Product Names
-        name_ele = self.wait_for_elements(landing_page_locs.item_product_names)
+        name_ele = self.wait_for_elements(all_products_page_locs.item_product_names)
         item_names = []
         for i in name_ele:
             item_names.append(i.text)
-        self.assertListEqual(item_names, landing_page_locs.list_items_names, "All Product Names are displayed")
+        self.assertListEqual(item_names, all_products_page_locs.list_items_names, "All Product Names are displayed")
         # Validate Product Descriptions
-        name_desc = self.wait_for_elements(landing_page_locs.item_product_desc)
+        name_desc = self.wait_for_elements(all_products_page_locs.item_product_desc)
         item_descs = []
         for i in name_desc:
             item_descs.append(i.text)
-        self.assertListEqual(item_descs, landing_page_locs.list_items_desc, "All Product Descriptions are displayed")
+        self.assertListEqual(item_descs, all_products_page_locs.list_items_desc, "All Product Descriptions are displayed")
         # Validate Add To card button displayed for all products
-        butns_add_to_cart = self.wait_for_elements(landing_page_locs.item_product_names)
+        butns_add_to_cart = self.wait_for_elements(all_products_page_locs.item_product_names)
         self.assertTrue(butns_add_to_cart.__len__() == 6, "All Add To Cart buttons displayed")
 
+    def validate_random_product_added_to_cart(self):
+        """
+        This method validates that any one of the products in landing page is added to cart
+        :return: None
+        """
+        total_products = self.wait_for_elements(all_products_page_locs.item_product_names)
+        self.product_no_cart = random.randint(1, total_products.__len__())
+        # Check that button state before clicking
+        self.assertTrue(
+            self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(self.product_no_cart) + ']//button').text == "Add to cart",
+            "Add Cart button not present before adding product to cart")
+        # Click on add to cart
+        self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[2]//button').click()
+        # Check that button is changed to remove
+        self.assertTrue(
+            self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[2]//button').text == "Remove",
+            "After adding product to cart, remove button is not displayed")
+        self.product_nos_cart.append(self.product_no_cart)
+
+
+    def validate_no_of_products_in_cart(self):
+        """
+        This method will check the no of products added to cart and validate it against the no displayed on cart icon
+        :return: None
+        """
+        self.assertTrue(self.product_nos_cart.__len__() == self.find_element("XPATH", int(all_products_page_locs.cart_products_no)),
+                        "No of cart items shown in cart icon is incorrect")
+
+    def capture_product_details(self) -> list:
+        """
+        This method will capture the details of all products added to cart
+        :return: product details of all products added to cart
+        """
+        for i in self.product_nos_cart:
+            product_name = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//a//div['
+                                                                                                    '@class="inventory_item_name"]').text
+            product_desc = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//a//div['
+                                                                                                    '@class="inventory_item_desc"]').text
+            product_price = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//a//div['
+                                                                                                    '@class="inventory_item_price"]').text
+            self.product_details.append([product_name, product_desc, product_price])
+        return self.product_details
+
+    def click_on_cart_icon(self):
+        """
+        This method will click on the cart icon to navigate to your cart page
+        :return: None
+        """
+        self.find_element("XPATH", all_products_page_locs.icon_cart).click()
