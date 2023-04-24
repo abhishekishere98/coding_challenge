@@ -144,6 +144,12 @@ class TestSauceLab:
         all_products.click_on_cart_icon()
         # Check user is navigated to My Cart Page
         your_cart = your_cart_methods(utils)
+        your_cart.validate_current_page_your_cart()
+        # Check that all products added to cart are present in cart
+        your_cart.validate_all_cart_products(product_details)
+        # Click on checkout button
+        your_cart.click_checkout()
+
 
 
 

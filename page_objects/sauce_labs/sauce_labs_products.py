@@ -75,10 +75,10 @@ class all_products_page_methods(common_methods, TestCase):
             self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(self.product_no_cart) + ']//button').text == "Add to cart",
             "Add Cart button not present before adding product to cart")
         # Click on add to cart
-        self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[2]//button').click()
+        self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(self.product_no_cart) + ']//button').click()
         # Check that button is changed to remove
         self.assertTrue(
-            self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[2]//button').text == "Remove",
+            self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(self.product_no_cart) + ']//button').text == "Remove",
             "After adding product to cart, remove button is not displayed")
         self.product_nos_cart.append(self.product_no_cart)
 
@@ -88,7 +88,7 @@ class all_products_page_methods(common_methods, TestCase):
         This method will check the no of products added to cart and validate it against the no displayed on cart icon
         :return: None
         """
-        self.assertTrue(self.product_nos_cart.__len__() == self.find_element("XPATH", int(all_products_page_locs.cart_products_no)),
+        self.assertTrue(self.product_nos_cart.__len__() == int(self.find_element("XPATH", all_products_page_locs.cart_products_no).text),
                         "No of cart items shown in cart icon is incorrect")
 
     def capture_product_details(self) -> list:
@@ -99,9 +99,9 @@ class all_products_page_methods(common_methods, TestCase):
         for i in self.product_nos_cart:
             product_name = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//a//div['
                                                                                                     '@class="inventory_item_name"]').text
-            product_desc = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//a//div['
+            product_desc = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//div['
                                                                                                     '@class="inventory_item_desc"]').text
-            product_price = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//a//div['
+            product_price = self.find_element("XPATH", '(' + all_products_page_locs.item_product + ')[' + str(i) +']//div['
                                                                                                     '@class="inventory_item_price"]').text
             self.product_details.append([product_name, product_desc, product_price])
         return self.product_details
