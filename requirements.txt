@@ -42,7 +42,7 @@ pytest-reporter-html1
 python-dotenv
 python-slugify
 requests
-selenium
+selenium == 4.9.1
 setuptools
 six
 sniffio
