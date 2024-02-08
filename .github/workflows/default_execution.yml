@@ -21,7 +21,6 @@ jobs:
         image: selenium/standalone-chrome
 
     steps:
-    - uses: actions/checkout@v3
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -29,8 +28,9 @@ jobs:
     - name: Remove Chrome
       run: sudo apt purge google-chrome-stable
     - name: Install Latest Chrome
-    - uses: browser-actions/setup-chrome@v1
-    - run: chrome --version
+      uses: browser-actions/setup-chrome@v1
+      with:
+       chrome-version: latest
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -44,4 +44,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test Default
       run: |
-        pytest --selectbrowser=chromium --template=html1/index.html --report=report.html -v -m default
+        pytest --selectbrowser=chrome --template=html1/index.html --report=report.html -v -m default
