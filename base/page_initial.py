@@ -11,6 +11,6 @@ class PageInit:
     def yield_driver(self):
         """
         This method will return the driver
-        :return: None
+        :return: driver
         """
         return self.driver
