@@ -20,7 +20,7 @@ class TestSauceLab:
         # Navigate to saucedemo url
         utils.goto_url("https://www.saucedemo.com/")
         # Page object landing page created
-        landing = sauce_labs_landing_page(utils)
+        landing = sauce_labs_landing_page(utils.yield_driver())
         # Validate all elements of landing page are displayed
         landing.saucelab_landing_page_elements_verification()
         # Capture login credentials from webpage
@@ -41,7 +41,7 @@ class TestSauceLab:
         # Navigate to saucedemo url
         utils.goto_url("https://www.saucedemo.com/")
         # Page object landing page created
-        landing = sauce_labs_landing_page(utils)
+        landing = sauce_labs_landing_page(utils.yield_driver())
         # Validate all elements of landing page are displayed
         landing.saucelab_landing_page_elements_verification()
         # Capture login credentials from webpage
@@ -61,7 +61,7 @@ class TestSauceLab:
         # Navigate to saucedemo url
         utils.goto_url("https://www.saucedemo.com/")
         # Page object landing page created
-        landing = sauce_labs_landing_page(utils)
+        landing = sauce_labs_landing_page(utils.yield_driver())
         # Validate all elements of landing page are displayed
         landing.saucelab_landing_page_elements_verification()
         # Capture login credentials from webpage
@@ -83,7 +83,7 @@ class TestSauceLab:
         # Navigate to saucedemo url
         utils.goto_url("https://www.saucedemo.com/")
         # Page object landing page created
-        landing = sauce_labs_landing_page(utils)
+        landing = sauce_labs_landing_page(utils.yield_driver())
         # Validate all elements of landing page are displayed
         landing.saucelab_landing_page_elements_verification()
         # Capture login credentials from webpage
@@ -103,14 +103,14 @@ class TestSauceLab:
         # Navigate to saucedemo url
         utils.goto_url("https://www.saucedemo.com/")
         # Page object landing page created
-        landing = sauce_labs_landing_page(utils)
+        landing = sauce_labs_landing_page(utils.yield_driver())
         # Validate all elements of landing page are displayed
         landing.saucelab_landing_page_elements_verification()
         # Capture login credentials from webpage
         landing.fetch_login_credentials()
         # Check user is successfully logged in
         landing.saucelab_login_success()
-        all_products = all_products_page_methods(utils)
+        all_products = all_products_page_methods(utils.yield_driver())
         all_products.validate_products_all_products_page()
 
     @pytest.mark.default
@@ -125,14 +125,14 @@ class TestSauceLab:
         # Navigate to saucedemo url
         utils.goto_url("https://www.saucedemo.com/")
         # Page object landing page created
-        landing = sauce_labs_landing_page(utils)
+        landing = sauce_labs_landing_page(utils.yield_driver())
         # Validate all elements of landing page are displayed
         landing.saucelab_landing_page_elements_verification()
         # Capture login credentials from webpage
         landing.fetch_login_credentials()
         # Check user is successfully logged in
         landing.saucelab_login_success()
-        all_products = all_products_page_methods(utils)
+        all_products = all_products_page_methods(utils.yield_driver())
         all_products.validate_products_all_products_page()
         # Add a product to cart and buy it
         all_products.validate_random_product_added_to_cart()
@@ -143,7 +143,7 @@ class TestSauceLab:
         # Click on cart icon and navigate to my cart page
         all_products.click_on_cart_icon()
         # Check user is navigated to My Cart Page
-        your_cart = your_cart_methods(utils)
+        your_cart = your_cart_methods(utils.yield_driver())
         your_cart.validate_current_page_your_cart()
         # Check that all products added to cart are present in cart
         your_cart.validate_all_cart_products(product_details)

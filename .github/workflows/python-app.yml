@@ -48,4 +48,4 @@ jobs:
       run: pip install requests webdriver-manager selenium pytest
     - name: Test zoopla
       run: |
-        pytest --selectbrowser=chromium --template=html1/index.html --report=report.html
+        pytest --selectbrowser=chrome

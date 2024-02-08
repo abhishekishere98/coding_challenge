@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from utils.common_methods import common_methods
 
+
 class landing_page_locs:
     page_main_heading = '//div[@class="login_logo"]'
     tb_username = '//input[@id="user-name"]'
@@ -14,26 +15,27 @@ class landing_page_locs:
     btn_clear_error = '//h3//button[@class="error-button"]'
 
 
-class sauce_labs_landing_page(common_methods, TestCase):
+class sauce_labs_landing_page(common_methods):
     usernames = []
     LockedOutUserErrorMsg = "Epic sadface: Sorry, this user has been locked out."
+
     def saucelab_landing_page_elements_verification(self):
         """
         Method to verify all landing page elements in sauce labs landing page
         :return: None
         """
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.page_main_heading).is_displayed(),
-                        "Page Logo is visible")
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.tb_username).is_displayed(),
-                        "Username textbox is displayed")
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.tb_password).is_displayed(),
-                        "Password textbox is displayed")
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.btn_submit).is_displayed(),
-                        "Submit button is displayed")
-        self.assertTrue(self.wait_for_elements(landing_page_locs.txt_user_names).__len__() != 0,
-                        "List of usernames is displayed")
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.txt_password).is_displayed(),
-                        "password text is displayed")
+        self.test.assertTrue(self.wait_till_element_is_visible(landing_page_locs.page_main_heading).is_displayed(),
+                             "Page Logo is visible")
+        self.test.assertTrue(self.wait_till_element_is_visible(landing_page_locs.tb_username).is_displayed(),
+                             "Username textbox is displayed")
+        self.test.assertTrue(self.wait_till_element_is_visible(landing_page_locs.tb_password).is_displayed(),
+                             "Password textbox is displayed")
+        self.test.assertTrue(self.wait_till_element_is_visible(landing_page_locs.btn_submit).is_displayed(),
+                             "Submit button is displayed")
+        self.test.assertTrue(self.wait_for_elements(landing_page_locs.txt_user_names).__len__() != 0,
+                             "List of usernames is displayed")
+        self.test.assertTrue(self.wait_till_element_is_visible(landing_page_locs.txt_password).is_displayed(),
+                             "password text is displayed")
 
     def fetch_login_credentials(self):
         """
@@ -57,8 +59,8 @@ class sauce_labs_landing_page(common_methods, TestCase):
         # Click on Login Button
         self.wait_for_element(landing_page_locs.btn_submit).click()
         # Check login is Successful
-        self.assertTrue(self.wait_for_element(landing_page_locs.header_swag_labs).is_displayed(),
-                        "User is successfully logged in and Swag Labs header is displayed")
+        self.test.assertTrue(self.wait_for_element(landing_page_locs.header_swag_labs).is_displayed(),
+                             "User is successfully logged in and Swag Labs header is displayed")
 
     def saucelab_login_Locked_out_user(self):
         """
@@ -74,13 +76,12 @@ class sauce_labs_landing_page(common_methods, TestCase):
         # Click on Login Button
         self.wait_for_element(landing_page_locs.btn_submit).click()
         # Check login not Successful
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.text_error_msg).is_displayed(),
-                        "User is not logged in and appropriate error message is displayed")
+        self.test.assertTrue(self.wait_till_element_is_visible(landing_page_locs.text_error_msg).is_displayed(),
+                             "User is not logged in and appropriate error message is displayed")
         # Check correct error text is displayed
-        self.assertTrue(self.wait_till_element_is_visible(landing_page_locs.text_error_msg).text ==
-                        sauce_labs_landing_page.LockedOutUserErrorMsg,
-                        "Correct error message is displayed when user is locked out")
-
+        self.test.assertTrue(self.wait_till_element_is_visible(landing_page_locs.text_error_msg).text ==
+                             sauce_labs_landing_page.LockedOutUserErrorMsg,
+                             "Correct error message is displayed when user is locked out")
 
     def saucelab_login_success_problem(self):
         """
@@ -96,8 +97,8 @@ class sauce_labs_landing_page(common_methods, TestCase):
         # Click on Login Button
         self.wait_for_element(landing_page_locs.btn_submit).click()
         # Check login is Successful with problem user
-        self.assertTrue(self.wait_for_element(landing_page_locs.header_swag_labs).is_displayed(),
-                        "User is successfully logged in and Swag Labs header is displayed")
+        self.test.assertTrue(self.wait_for_element(landing_page_locs.header_swag_labs).is_displayed(),
+                             "User is successfully logged in and Swag Labs header is displayed")
 
     def saucelab_login_success_slow_user(self):
         """
@@ -113,9 +114,5 @@ class sauce_labs_landing_page(common_methods, TestCase):
         # Click on Login Button
         self.wait_for_element(landing_page_locs.btn_submit).click()
         # Check login is Successful with problem user
-        self.assertTrue(self.wait_for_element(landing_page_locs.header_swag_labs).is_displayed(),
-                        "User is successfully logged in and Swag Labs header is displayed")
-
-
-
-
+        self.test.assertTrue(self.wait_for_element(landing_page_locs.header_swag_labs).is_displayed(),
+                             "User is successfully logged in and Swag Labs header is displayed")

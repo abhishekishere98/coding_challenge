@@ -14,25 +14,25 @@ class your_cart_locs:
     btn_checkout = 'checkout'
 
 
-class your_cart_methods(common_methods, TestCase):
+class your_cart_methods(common_methods):
 
     def validate_current_page_your_cart(self):
         """
         Method to validate current page is your cart and all its elements are present
         :return: None
         """
-        self.assertTrue(self.wait_till_element_is_visible(your_cart_locs.txt_header),
-                        "'Swag Labs' Heading is not displayed'")
-        self.assertTrue(self.wait_till_element_is_visible(your_cart_locs.txt_header),
-                        "'Your Cart' title is not displayed'")
-        self.assertTrue(self.wait_till_element_is_visible(your_cart_locs.cart_list_heading_1),
-                        "'QTY' Heading is not displayed'")
-        self.assertTrue(self.wait_till_element_is_visible(your_cart_locs.cart_list_heading_2),
-                        "'Description' Heading is not displayed'")
-        self.assertTrue(self.find_element("ID", your_cart_locs.btn_continue_shopping),
-                        "Continue Shopping button not displayed in Your Cart page")
-        self.assertTrue(self.find_element("ID", your_cart_locs.btn_checkout),
-                        "Checkout button not displayed in Your Cart page")
+        self.test.assertTrue(self.wait_till_element_is_visible(your_cart_locs.txt_header),
+                             "'Swag Labs' Heading is not displayed'")
+        self.test.assertTrue(self.wait_till_element_is_visible(your_cart_locs.txt_header),
+                             "'Your Cart' title is not displayed'")
+        self.test.assertTrue(self.wait_till_element_is_visible(your_cart_locs.cart_list_heading_1),
+                             "'QTY' Heading is not displayed'")
+        self.test.assertTrue(self.wait_till_element_is_visible(your_cart_locs.cart_list_heading_2),
+                             "'Description' Heading is not displayed'")
+        self.test.assertTrue(self.find_element("ID", your_cart_locs.btn_continue_shopping),
+                             "Continue Shopping button not displayed in Your Cart page")
+        self.test.assertTrue(self.find_element("ID", your_cart_locs.btn_checkout),
+                             "Checkout button not displayed in Your Cart page")
 
     def validate_all_cart_products(self, cart_products):
         """
@@ -42,18 +42,18 @@ class your_cart_methods(common_methods, TestCase):
         """
         products_in_cart = []
         products_ele = self.wait_for_elements(your_cart_locs.cart_items)
-        for i in range(1, products_ele.__len__()+1):
+        for i in range(1, products_ele.__len__() + 1):
             product_name = self.find_element("XPATH",
                                              '(' + your_cart_locs.cart_items + ')[' + str(i) + ']//div['
-                                                                                                         '@class="inventory_item_name"]').text
+                                                                                               '@class="inventory_item_name"]').text
             product_desc = self.find_element("XPATH",
                                              '(' + your_cart_locs.cart_items + ')[' + str(i) + ']//div['
-                                                                                                         '@class="inventory_item_desc"]').text
+                                                                                               '@class="inventory_item_desc"]').text
             product_price = self.find_element("XPATH",
                                               '(' + your_cart_locs.cart_items + ')[' + str(i) + ']//div['
-                                                                                                          '@class="inventory_item_price"]').text
+                                                                                                '@class="inventory_item_price"]').text
             products_in_cart.append([product_name, product_desc, product_price])
-        self.assertCountEqual(cart_products, products_in_cart, "All Product details dont match")
+        self.test.assertCountEqual(cart_products, products_in_cart, "All Product details dont match")
 
     def click_checkout(self):
         """
