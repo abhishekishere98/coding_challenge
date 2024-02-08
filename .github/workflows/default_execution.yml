@@ -47,4 +47,4 @@ jobs:
       run: pip install webdriver-manager==3.8.0
     - name: Test Default
       run: |
-        pytest --selectbrowser=chrome
+        pytest --selectbrowser=chromium

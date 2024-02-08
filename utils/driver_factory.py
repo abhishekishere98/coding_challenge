@@ -12,7 +12,7 @@ class DriverFactory:
         if config.lower() == "chrome":
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
-            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()), options=options)
             return driver
         if config.lower() == "chromium":
             options = webdriver.ChromeOptions()
