@@ -15,4 +15,7 @@ def setup(request):
 
 def pytest_addoption(parser):
     parser.addoption("--selectbrowser", action="store", default="chrome")
+    parser.addoption("--template", action="store", default="html1/index.html")
+    parser.addoption("--report", action="store", default="report.html")
+    
 
