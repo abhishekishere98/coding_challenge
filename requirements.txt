@@ -56,7 +56,7 @@ trio-websocket
 typing-extensions
 urllib3
 wcwidth
-webdriver-manager
+webdriver_manager
 websockets
 wheel
 wsproto
