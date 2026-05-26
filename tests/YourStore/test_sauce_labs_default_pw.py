@@ -1,23 +1,25 @@
 import pytest
 
 from utils.common_methods import common_methods
-from utils.common_methods import common_methods_pw
-from page_objects.sauce_labs.sauce_labs_landing import sauce_labs_landing_page
-from page_objects.sauce_labs.sauce_labs_products import all_products_page_methods
-from page_objects.sauce_labs.sauce_labs_your_cart import your_cart_methods
+from page_objects.sauce_labs.selenium_pages.sauce_labs_landing import sauce_labs_landing_page
+from page_objects.sauce_labs.selenium_pages.sauce_labs_products import all_products_page_methods
+from page_objects.sauce_labs.selenium_pages.sauce_labs_your_cart import your_cart_methods
 
 
+@pytest.mark.selenium
+@pytest.mark.sauce_labs
+@pytest.mark.e2e
 class TestSauceLab:
 
     @pytest.mark.default
-    def test_sauce_lab_page_successfully_logged_in(self, setup_pw):
+    def test_sauce_lab_page_successfully_logged_in(self, setup):
         """
         Open your store webpage and validate landing page elements
         :param setup: pytest fixture to initiate and yield driver
         :return: None
         """
         # create landing page object through pytest fixture setup
-        utils = common_methods_pw(setup_pw)
+        utils = common_methods(setup)
         # Navigate to saucedemo url
         utils.goto_url("https://www.saucedemo.com/")
         # Page object landing page created

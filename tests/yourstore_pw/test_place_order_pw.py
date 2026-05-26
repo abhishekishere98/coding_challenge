@@ -1,15 +1,19 @@
+import pytest
 from playwright.sync_api import expect
 
-from page_objects.sauce_labs.playwright_pages import landing_loginPage_pw
+from page_objects.sauce_labs.playwright_pages.landing_loginPage_pw import LoginPage
 
 
+@pytest.mark.playwright
+@pytest.mark.sauce_labs
+@pytest.mark.e2e
 def test_place_order(set_up) -> None:
     """
     Verify that user is able to place an order successfully
     """
     page = set_up
     credentials = {'username': 'standard_user', 'password': 'secret_sauce'}
-    login_p = landing_loginPage_pw(page)
+    login_p = LoginPage(page)
     products_p = login_p.do_login(credentials)
 
     product_name = "Sauce Labs Fleece Jacket"

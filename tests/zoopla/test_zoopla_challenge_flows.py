@@ -12,7 +12,10 @@ from page_objects.zoopla.zoopla_login_screen import zoopla_login_methods
 class TestZoopla:
 
     @pytest.mark.code_challenge
-    def test_zoopla_save_search_daily_subscription(self, setup):
+    @pytest.mark.zoopla
+    @pytest.mark.e2e
+    @pytest.mark.selenium
+    def test_zoopla_save_search_daily_subscription(self, setup, zoopla_credentials):
         """
         Register for daily email updates on rental property in London for 1 bed properties between £800 and £1000 per month
         :param setup: Pytest fixture to initiate and yield driver
@@ -33,7 +36,7 @@ class TestZoopla:
         # Validate login page ui elements
         login.validate_login_page_elements()
         # Enter login credentials and click on sign in
-        login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
+        login.enter_login_info_click_sign_in(*zoopla_credentials)
         # Click on to rent link
         landing.click_to_rent_nav_link()
         # create to rent page object
@@ -62,7 +65,10 @@ class TestZoopla:
         alert_search.validate_first_saved_record_to_rent("London", 1, 800, 1000, "Daily summary emails")
 
     @pytest.mark.code_challenge
-    def test_change_frequency_save_search(self, setup):
+    @pytest.mark.zoopla
+    @pytest.mark.e2e
+    @pytest.mark.selenium
+    def test_change_frequency_save_search(self, setup, zoopla_credentials):
         """
         Change the frequency of an existing email update
         :param setup: Pytest fixture to initiate and yield driver
@@ -83,7 +89,7 @@ class TestZoopla:
         # Validate login page ui elements
         login.validate_login_page_elements()
         # Enter login credentials and click on sign in
-        login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
+        login.enter_login_info_click_sign_in(*zoopla_credentials)
         # Click on to rent link
         landing.click_to_rent_nav_link()
         # create to rent page object
@@ -114,6 +120,9 @@ class TestZoopla:
         alert_search.change_frequency_first_saved_search('Weekly summary emails')
 
     @pytest.mark.code_challenge
+    @pytest.mark.zoopla
+    @pytest.mark.e2e
+    @pytest.mark.selenium
     def test_sale_house_prices_search(self, setup):
         """
         Search for a particular property in the house prices search and confirm that it appears as the first result
@@ -144,6 +153,9 @@ class TestZoopla:
         house_prices.validate_first_result("Flat 16, Radnor House, 1272 London Road, London, SW16 4EA")
 
     @pytest.mark.code_challenge
+    @pytest.mark.zoopla
+    @pytest.mark.e2e
+    @pytest.mark.selenium
     def test_for_sale_house_garage_search(self, setup):
         """
         Search houses for sale including the key word “garage” and check that results have garages
@@ -174,7 +186,10 @@ class TestZoopla:
         for_sale.validate_keyword_search_successful("Garage")
 
     @pytest.mark.code_challenge
-    def test_time_search_in_area(self, setup):
+    @pytest.mark.zoopla
+    @pytest.mark.e2e
+    @pytest.mark.selenium
+    def test_time_search_in_area(self, setup, zoopla_credentials):
         """
         Save a search for property within 15 minutes drive of SE1 2LH.
         param setup: Pytest fixture to initiate and yield driver
@@ -195,7 +210,7 @@ class TestZoopla:
         # Validate login page ui elements
         login.validate_login_page_elements()
         # Enter login credentials and click on sign in
-        login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
+        login.enter_login_info_click_sign_in(*zoopla_credentials)
         # Click on For sale link
         landing.click_for_sale_nav_link()
         # Create For sale page object
@@ -218,7 +233,10 @@ class TestZoopla:
         for_sale.click_save_results()
 
     @pytest.mark.code_challenge
-    def test_retrieve_saved_searches(self, setup):
+    @pytest.mark.zoopla
+    @pytest.mark.e2e
+    @pytest.mark.selenium
+    def test_retrieve_saved_searches(self, setup, zoopla_credentials):
         """
         Check that saved searches can be retrieved
         :param setup: Pytest fixture to initiate and yield driver
@@ -239,7 +257,7 @@ class TestZoopla:
         # Validate login page ui elements
         login.validate_login_page_elements()
         # Enter login credentials and click on sign in
-        login.enter_login_info_click_sign_in("abhishekishere98@gmail.com", "Work4aig!")
+        login.enter_login_info_click_sign_in(*zoopla_credentials)
         # Click on For sale link
         landing.click_for_sale_nav_link()
         # Create For sale page object

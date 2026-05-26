@@ -13,19 +13,33 @@ from playwright.sync_api import Page, BrowserContext
 
 class DriverFactory:
     @staticmethod
-    def get_driver(config) -> webdriver:
+    def get_driver(config, headless: bool = False) -> webdriver:
         if config.lower() == "chrome":
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
-            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()), options=options)
+            if headless:
+                options.add_argument("--headless=new")
+                options.add_argument("--window-size=1920,1080")
+            driver = webdriver.Chrome(
+                service=ChromeService(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()),
+                options=options,
+            )
             return driver
         if config.lower() == "chromium":
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
-            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()), options=options)
+            if headless:
+                options.add_argument("--headless=new")
+                options.add_argument("--window-size=1920,1080")
+            driver = webdriver.Chrome(
+                service=ChromeService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
+                options=options,
+            )
             return driver
         elif config.lower() == "firefox":
             options = webdriver.FirefoxOptions()
+            if headless:
+                options.add_argument("-headless")
             driver = webdriver.Firefox(service=GekoService(GeckoDriverManager().install()), options=options)
             return driver
         raise Exception("Please provide a valid \"driver\" name")

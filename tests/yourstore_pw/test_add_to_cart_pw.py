@@ -1,13 +1,17 @@
-from playwright.sync_api import expect
+import pytest
+from playwright.sync_api import Page, expect
 
-from automationneemo.src.pages.LoginPage import LoginPage
+from page_objects.sauce_labs.playwright_pages.landing_loginPage_pw import LoginPage
 
-
-def test_add_to_cart(set_up_tear_down) -> None:
+@pytest.mark.new_pw
+@pytest.mark.playwright
+@pytest.mark.sauce_labs
+@pytest.mark.smoke
+def test_add_to_cart(page: Page) -> None:
     """
     Verify that add to cart button is changed to Remove when clicked
     """
-    page = set_up_tear_down
+    page = page
     credentials = {'username': 'standard_user', 'password': 'secret_sauce'}
     login_p = LoginPage(page)
     products_p = login_p.do_login(credentials)
@@ -19,8 +23,10 @@ def test_add_to_cart(set_up_tear_down) -> None:
     expect(products_p.get_add_remove_cart_locator(product_name)).to_have_text("Remove")
 
 
-def test_remove_product_from_cart(set_up_tear_down) -> None:
-    page = set_up_tear_down
+@pytest.mark.playwright
+@pytest.mark.sauce_labs
+def test_remove_product_from_cart(page) -> None:
+    page = page
     credentials = {'username': 'standard_user', 'password': 'secret_sauce'}
     login_p = LoginPage(page)
     products_p = login_p.do_login(credentials)

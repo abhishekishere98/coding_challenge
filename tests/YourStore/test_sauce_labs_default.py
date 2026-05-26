@@ -1,11 +1,14 @@
 import pytest
 
 from utils.common_methods import common_methods
-from page_objects.sauce_labs.sauce_labs_landing import sauce_labs_landing_page
-from page_objects.sauce_labs.sauce_labs_products import all_products_page_methods
-from page_objects.sauce_labs.sauce_labs_your_cart import your_cart_methods
+from page_objects.sauce_labs.selenium_pages.sauce_labs_landing import sauce_labs_landing_page
+from page_objects.sauce_labs.selenium_pages.sauce_labs_products import all_products_page_methods
+from page_objects.sauce_labs.selenium_pages.sauce_labs_your_cart import your_cart_methods
 
 
+@pytest.mark.selenium
+@pytest.mark.sauce_labs
+@pytest.mark.e2e
 class TestSauceLab:
 
     @pytest.mark.default
